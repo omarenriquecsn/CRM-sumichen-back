@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const ticketsControllers_1 = require("../controllers/ticketsControllers");
+const asyncHandler_1 = require("../middlewares/asyncHandler");
+const router = (0, express_1.Router)();
+router.get('/tickets', (0, asyncHandler_1.asyncHandler)(ticketsControllers_1.getTickets));
+router.get('/tickets/:id', (0, asyncHandler_1.asyncHandler)(ticketsControllers_1.getTicketsByVendedor));
+router.post('/tickets', (0, asyncHandler_1.asyncHandler)(ticketsControllers_1.createTicket));
+router.put('/tickets/:id', (0, asyncHandler_1.asyncHandler)(ticketsControllers_1.updateTicket));
+router.delete('/tickets/:id', (0, asyncHandler_1.asyncHandler)(ticketsControllers_1.deleteTicket));
+exports.default = router;

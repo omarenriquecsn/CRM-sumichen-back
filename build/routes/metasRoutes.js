@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const metasControllers_1 = require("../controllers/metasControllers");
+const asyncHandler_1 = require("../middlewares/asyncHandler");
+const router = (0, express_1.Router)();
+router.get('/metas', (0, asyncHandler_1.asyncHandler)(metasControllers_1.getMetas));
+router.get('/metas/:id', (0, asyncHandler_1.asyncHandler)(metasControllers_1.getMetasById));
+router.post('/metas', (0, asyncHandler_1.asyncHandler)(metasControllers_1.createMetas));
+router.put('/metas/:id', (0, asyncHandler_1.asyncHandler)(metasControllers_1.updateMetas));
+router.delete('/metas/:id', (0, asyncHandler_1.asyncHandler)(metasControllers_1.deleteMetas));
+exports.default = router;

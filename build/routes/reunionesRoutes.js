@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const reunionesControllers_1 = require("../controllers/reunionesControllers");
+const asyncHandler_1 = require("../middlewares/asyncHandler");
+const router = (0, express_1.Router)();
+router.get('/reuniones', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.getReuniones));
+router.get('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.getReunionesByVendedor));
+router.post('/reuniones', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.createReunion));
+router.put('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.updateReunion));
+router.delete('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.deleteReunion));
+exports.default = router;

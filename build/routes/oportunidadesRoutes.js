@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const oportunidadesControllers_1 = require("../controllers/oportunidadesControllers");
+const asyncHandler_1 = require("../middlewares/asyncHandler");
+const router = (0, express_1.Router)();
+router.get('/oportunidades', (0, asyncHandler_1.asyncHandler)(oportunidadesControllers_1.getOportunidades));
+router.get('/oportunidades/:id', (0, asyncHandler_1.asyncHandler)(oportunidadesControllers_1.getOportunidadById));
+router.post('/oportunidades', (0, asyncHandler_1.asyncHandler)(oportunidadesControllers_1.createOportunidad));
+router.put('/oportunidades/:id', (0, asyncHandler_1.asyncHandler)(oportunidadesControllers_1.updateOportunidad));
+router.delete('/oportunidades/:id', (0, asyncHandler_1.asyncHandler)(oportunidadesControllers_1.deleteOportunidad));
+exports.default = router;
