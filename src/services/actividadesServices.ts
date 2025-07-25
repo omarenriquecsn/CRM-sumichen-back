@@ -1,19 +1,32 @@
+import { Actividad } from "../entities/Actividades";
+import { getActividads, getActividadById, createActividad, updateActividad, deleteActividad } from "../repositories/actividadesRepository";
+
+
 export const getActividadesService = async () => {
-  return 'Actividades';
+  const actividades = await getActividads();
+  if (actividades.length === 0)
+    throw new Error('No hay actividades para mostrar');
+  return actividades;
 };
 
-export const getActividadesByIdService = async () => {
-  return 'Actividades por id';
+export const getActividadesByIdService = async (id: string) => {
+  const actividades = await getActividadById(id);
+  if (actividades.length === 0)
+    throw new Error('No hay actividades para mostrar');
+  return actividades; 
 };
 
-export const createActividadesService = async () => {
-  return 'Crear Actividades';
+export const createActividadesService = async ( ActividadData: Partial<Actividad>) => {
+  const actividadCreada = await createActividad( ActividadData);
+  return actividadCreada;
 };
 
-export const updateActividadesService = async () => {
-  return 'Actualizar Actividades';
+export const updateActividadesService = async (id: string, ActividadData: Partial<Actividad>) => {
+  const actividadActualizada = await updateActividad(id, ActividadData);
+  return actividadActualizada;
 };
 
-export const deleteActividadesService = async () => {
-  return 'Eliminar Actividades';
+export const deleteActividadesService = async (id: string) => {
+  const actividadBorrada = await deleteActividad(id);
+  return actividadBorrada;
 };

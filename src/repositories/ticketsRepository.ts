@@ -30,3 +30,18 @@ export const deleteTicket = async (id: string) => {
     estado: EstadoTicketEnum.CERRADO,
   });
 };
+
+
+export async function generarNumero(): Promise<string> {
+  const repo = AppDataSource.getRepository(Ticket);
+
+  const ultimo = await repo
+    .createQueryBuilder('pedido')
+    .select('MAX(pedido.numero)', 'max')
+    .getRawOne();
+
+  const actual = parseInt(ultimo?.max?.split('-')[1] ?? '0');
+  const siguiente = actual + 1;
+
+  return `TK-${siguiente.toString().padStart(4, '0')}`;
+}

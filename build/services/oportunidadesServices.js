@@ -10,23 +10,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteOportunidadesService = exports.updateOportunidadesService = exports.getOportunidadesByIdService = exports.createOportunidadesService = exports.getOportunidadesService = void 0;
+const oportunidadesRepository_1 = require("../repositories/oportunidadesRepository");
 const getOportunidadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Oportunidades';
+    const oportunidades = yield (0, oportunidadesRepository_1.getOportunidads)();
+    return oportunidades;
 });
 exports.getOportunidadesService = getOportunidadesService;
-const createOportunidadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Crear Oportunidades';
+const createOportunidadesService = (oportunidadData) => __awaiter(void 0, void 0, void 0, function* () {
+    const nuevaOportunidad = yield (0, oportunidadesRepository_1.createOportunidad)(oportunidadData);
+    return nuevaOportunidad;
 });
 exports.createOportunidadesService = createOportunidadesService;
-const getOportunidadesByIdService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Oportunidades por id';
+const getOportunidadesByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const oportunidades = yield (0, oportunidadesRepository_1.getOportunidadById)(id);
+    return oportunidades;
 });
 exports.getOportunidadesByIdService = getOportunidadesByIdService;
-const updateOportunidadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Actualizar Oportunidades';
+const updateOportunidadesService = (id, oportunidadData) => __awaiter(void 0, void 0, void 0, function* () {
+    const oportunidadActualizada = yield (0, oportunidadesRepository_1.updateOportunidad)(id, oportunidadData);
+    return oportunidadActualizada;
 });
 exports.updateOportunidadesService = updateOportunidadesService;
-const deleteOportunidadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Eliminar Oportunidades';
+const deleteOportunidadesService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const oportunidadBorrada = yield (0, oportunidadesRepository_1.deleteOportunidad)(id);
+    return oportunidadBorrada;
 });
 exports.deleteOportunidadesService = deleteOportunidadesService;

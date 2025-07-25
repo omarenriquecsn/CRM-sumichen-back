@@ -14,8 +14,8 @@ const pedidosServices_1 = require("../services/pedidosServices");
 const ApiError_1 = require("../utils/ApiError");
 const getPedidos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosServices_1.getPedidosService)();
-    if (pedidos.length === 0)
-        throw new ApiError_1.ApiError('No hay pedidos registrados');
+    if (!pedidos)
+        return [];
     res.json(pedidos);
 });
 exports.getPedidos = getPedidos;

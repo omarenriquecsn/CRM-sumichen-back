@@ -27,6 +27,10 @@ __decorate([
     __metadata("design:type", String)
 ], Pedido.prototype, "id", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'integer', default: () => "nextval('numero_seq')" }),
+    __metadata("design:type", Number)
+], Pedido.prototype, "numero", void 0);
+__decorate([
     (0, typeorm_1.Column)({ name: 'cliente_id' }),
     __metadata("design:type", String)
 ], Pedido.prototype, "cliente_id", void 0);

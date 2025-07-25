@@ -22,6 +22,9 @@ export class Pedido {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ type: 'integer', default: () => "nextval('numero_seq')" })
+  numero: number;
+
   @Column({ name: 'cliente_id' })
   cliente_id: string;
 
@@ -74,7 +77,11 @@ export class Pedido {
   @UpdateDateColumn({ type: 'timestamptz' })
   fecha_actualizacion: Date;
 
-  @OneToMany(() => ProductosPedido, (productos_pedido) => productos_pedido.pedido, {eager: true})
+  @OneToMany(
+    () => ProductosPedido,
+    (productos_pedido) => productos_pedido.pedido,
+    { eager: true },
+  )
   productos_pedido: ProductosPedido[];
 
   @Column({

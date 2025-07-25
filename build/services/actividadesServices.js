@@ -10,23 +10,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteActividadesService = exports.updateActividadesService = exports.createActividadesService = exports.getActividadesByIdService = exports.getActividadesService = void 0;
+const actividadesRepository_1 = require("../repositories/actividadesRepository");
 const getActividadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Actividades';
+    const actividades = yield (0, actividadesRepository_1.getActividads)();
+    if (actividades.length === 0)
+        throw new Error('No hay actividades para mostrar');
+    return actividades;
 });
 exports.getActividadesService = getActividadesService;
-const getActividadesByIdService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Actividades por id';
+const getActividadesByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const actividades = yield (0, actividadesRepository_1.getActividadById)(id);
+    if (actividades.length === 0)
+        throw new Error('No hay actividades para mostrar');
+    return actividades;
 });
 exports.getActividadesByIdService = getActividadesByIdService;
-const createActividadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Crear Actividades';
+const createActividadesService = (ActividadData) => __awaiter(void 0, void 0, void 0, function* () {
+    const actividadCreada = yield (0, actividadesRepository_1.createActividad)(ActividadData);
+    return actividadCreada;
 });
 exports.createActividadesService = createActividadesService;
-const updateActividadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Actualizar Actividades';
+const updateActividadesService = (id, ActividadData) => __awaiter(void 0, void 0, void 0, function* () {
+    const actividadActualizada = yield (0, actividadesRepository_1.updateActividad)(id, ActividadData);
+    return actividadActualizada;
 });
 exports.updateActividadesService = updateActividadesService;
-const deleteActividadesService = () => __awaiter(void 0, void 0, void 0, function* () {
-    return 'Eliminar Actividades';
+const deleteActividadesService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const actividadBorrada = yield (0, actividadesRepository_1.deleteActividad)(id);
+    return actividadBorrada;
 });
 exports.deleteActividadesService = deleteActividadesService;

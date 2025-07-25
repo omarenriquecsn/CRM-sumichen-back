@@ -17,7 +17,8 @@ export const getActividades = async (req: Request, res: Response) => {
 };
 
 export const getActividadesById = async (req: Request, res: Response) => {
-  const actividad = await getActividadesByIdService();
+  const { id } = req.params;
+  const actividad = await getActividadesByIdService(id);
 
   if (!actividad) throw new ApiError('Actividad no encontrada', 404);
 
@@ -25,7 +26,7 @@ export const getActividadesById = async (req: Request, res: Response) => {
 };
 
 export const createActividades = async (req: Request, res: Response) => {
-  const newActividad = await createActividadesService();
+  const newActividad = await createActividadesService(req.body);
 
   if (!newActividad) throw new ApiError('No se ha creado la actividad', 400);
 
@@ -33,7 +34,8 @@ export const createActividades = async (req: Request, res: Response) => {
 };
 
 export const updateActividades = async (req: Request, res: Response) => {
-  const laActividad = await updateActividadesService();
+  const { id } = req.params;
+  const laActividad = await updateActividadesService(id, req.body);
 
   if (!laActividad) throw new ApiError('No se actualizo la activdad', 400);
 
@@ -41,7 +43,8 @@ export const updateActividades = async (req: Request, res: Response) => {
 };
 
 export const deleteActividades = async (req: Request, res: Response) => {
-  const actividadBorrada = await deleteActividadesService();
+  const { id } = req.params;
+  const actividadBorrada = await deleteActividadesService(id);
 
   if (!actividadBorrada)
     throw new ApiError('No se ha borrado la actividad', 400);

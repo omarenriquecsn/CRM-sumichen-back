@@ -20,28 +20,31 @@ const getActividades = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getActividades = getActividades;
 const getActividadesById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const actividad = yield (0, actividadesServices_1.getActividadesByIdService)();
+    const { id } = req.params;
+    const actividad = yield (0, actividadesServices_1.getActividadesByIdService)(id);
     if (!actividad)
         throw new ApiError_1.ApiError('Actividad no encontrada', 404);
     res.json(actividad);
 });
 exports.getActividadesById = getActividadesById;
 const createActividades = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newActividad = yield (0, actividadesServices_1.createActividadesService)();
+    const newActividad = yield (0, actividadesServices_1.createActividadesService)(req.body);
     if (!newActividad)
         throw new ApiError_1.ApiError('No se ha creado la actividad', 400);
     res.json(newActividad);
 });
 exports.createActividades = createActividades;
 const updateActividades = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const laActividad = yield (0, actividadesServices_1.updateActividadesService)();
+    const { id } = req.params;
+    const laActividad = yield (0, actividadesServices_1.updateActividadesService)(id, req.body);
     if (!laActividad)
         throw new ApiError_1.ApiError('No se actualizo la activdad', 400);
     res.json(laActividad);
 });
 exports.updateActividades = updateActividades;
 const deleteActividades = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const actividadBorrada = yield (0, actividadesServices_1.deleteActividadesService)();
+    const { id } = req.params;
+    const actividadBorrada = yield (0, actividadesServices_1.deleteActividadesService)(id);
     if (!actividadBorrada)
         throw new ApiError_1.ApiError('No se ha borrado la actividad', 400);
     res.status(204).send();

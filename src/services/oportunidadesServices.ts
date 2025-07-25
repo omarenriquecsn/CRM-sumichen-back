@@ -1,19 +1,27 @@
+import { Oportunidad } from "../entities/Oportunidades";
+import { getOportunidads, getOportunidadById, createOportunidad, updateOportunidad, deleteOportunidad } from "../repositories/oportunidadesRepository";
+
 export const getOportunidadesService = async () => {
-  return 'Oportunidades';
+  const oportunidades = await getOportunidads();
+  return oportunidades;
 };
 
-export const createOportunidadesService = async () => {
-  return 'Crear Oportunidades';
+export const createOportunidadesService = async (oportunidadData:Oportunidad) => {
+  const nuevaOportunidad = await createOportunidad(oportunidadData);
+  return nuevaOportunidad;
 };
 
-export const getOportunidadesByIdService = async () => {
-  return 'Oportunidades por id';
+export const getOportunidadesByIdService = async (id: string) => {
+ const oportunidades = await getOportunidadById(id);
+ return oportunidades
 };
 
-export const updateOportunidadesService = async () => {
-  return 'Actualizar Oportunidades';
+export const updateOportunidadesService = async (id: string, oportunidadData:Partial<Oportunidad>) => {
+  const oportunidadActualizada = await updateOportunidad(id, oportunidadData);
+  return oportunidadActualizada
 };
 
-export const deleteOportunidadesService = async () => {
-  return 'Eliminar Oportunidades';
+export const deleteOportunidadesService = async (id: string) => {
+  const oportunidadBorrada = await deleteOportunidad(id);
+  return oportunidadBorrada
 };

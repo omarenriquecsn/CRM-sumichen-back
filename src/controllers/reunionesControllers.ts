@@ -18,7 +18,7 @@ export const getReuniones = async (req: Request, res: Response) => {
 
 export const getReunionById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const reuniones = await getReunionesByVendedorService(id);
+  const reuniones = await getReunionesByIdService(id);
   if (reuniones.length === 0) throw new ApiError('No hay reuniones disponibles', 404);
   res.json(reuniones);
 };

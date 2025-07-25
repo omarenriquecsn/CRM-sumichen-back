@@ -17,8 +17,8 @@ export class CrearPedidoDto {
     moneda: MonedaEnum
     tipo_pago: TipoPagoEnum;
     fecha_entrega: Date;
-    notas: string;
-    dias_credito: DiasCreditoEnum;
+    notas?: string;
+    dias_credito?: DiasCreditoEnum;
     transporte: TransporteEnum;
     productos: Producto_pedido[];
 }

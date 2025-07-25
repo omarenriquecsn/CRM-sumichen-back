@@ -20,7 +20,7 @@ const getReunions = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getReunions = getReunions;
 const getReunionById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const ReunionRepository = dataBaseConfig_1.AppDataSource.getRepository(Reuniones_1.Reunion);
-    return yield ReunionRepository.find({ where: { vendedor_id: id } });
+    return yield ReunionRepository.find({ where: { vendedor_id: id }, relations: ['cliente'] });
 });
 exports.getReunionById = getReunionById;
 const createReunion = (ReunionData) => __awaiter(void 0, void 0, void 0, function* () {

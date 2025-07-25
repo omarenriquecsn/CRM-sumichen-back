@@ -17,13 +17,13 @@ export const getOportunidades = async (req: Request, res: Response) => {
 
 export const getOportunidadById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const oportunidad = await getOportunidadesByIdService();
+  const oportunidad = await getOportunidadesByIdService(id);
   if (!oportunidad) throw new ApiError('Oportunidad no encontrada', 404);
   res.json(oportunidad);
 };
 
 export const createOportunidad = async (req: Request, res: Response) => {
-  const nuevaOportunidad = await createOportunidadesService();
+  const nuevaOportunidad = await createOportunidadesService(req.body);
   if (!nuevaOportunidad)
     throw new ApiError('Error al crear la oportunidad', 400);
   res.status(201).json(nuevaOportunidad);
@@ -31,7 +31,7 @@ export const createOportunidad = async (req: Request, res: Response) => {
 
 export const updateOportunidad = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const actualizada = await updateOportunidadesService();
+  const actualizada = await updateOportunidadesService(id, req.body);
   if (!actualizada)
     throw new ApiError('No se pudo actualizar la oportunidad', 400);
   res.json(actualizada);
@@ -39,7 +39,7 @@ export const updateOportunidad = async (req: Request, res: Response) => {
 
 export const deleteOportunidad = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const borrada = await deleteOportunidadesService();
+  const borrada = await deleteOportunidadesService(id);
   if (!borrada) throw new ApiError('No se pudo eliminar la oportunidad', 400);
   res.status(204).send();
 };

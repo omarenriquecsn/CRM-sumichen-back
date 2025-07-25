@@ -25,8 +25,9 @@ export const getPedidosByIdService = async (id: string) => {
 };
 
 export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
+  console.log('pedidoData', pedidoData);
   const { productos, ...rest } = pedidoData;
-
+  console.log('rest', rest);
   const neuevoPedido = {
     ...rest,
     impuestos: rest.impuestos === 'exento' ? 0 : 0.16,

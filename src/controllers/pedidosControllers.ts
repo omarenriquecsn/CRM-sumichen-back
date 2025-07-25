@@ -11,7 +11,7 @@ import { ApiError } from '../utils/ApiError';
 
 export const getPedidos = async (req: Request, res: Response) => {
   const pedidos = await getPedidosService();
-  if (pedidos.length === 0) throw new ApiError('No hay pedidos registrados');
+  if(!pedidos) return []
   res.json(pedidos);
 };
 

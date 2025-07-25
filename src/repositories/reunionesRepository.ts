@@ -9,7 +9,7 @@ export const getReunions = async () => {
 
 export const getReunionById = async (id: string) => {
   const ReunionRepository = AppDataSource.getRepository(Reunion);
-  return await ReunionRepository.find({ where: { vendedor_id: id } });
+  return await ReunionRepository.find({ where: { vendedor_id: id }, relations: ['cliente'] });
 };
 
 export const createReunion = async (ReunionData: Partial<Reunion>) => {

@@ -31,9 +31,11 @@ exports.getTicketsByIdService = getTicketsByIdService;
 const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, function* () {
     if (!ticketData.vendedor_id)
         throw new ApiError_1.ApiError('El ticket debe tener el id del vendedor');
-    const vendedor = yield (0, usuariosRepository_1.getUsuarioById)(ticketData.vendedor_id);
+    console.log(ticketData.vendedor_id);
+    const vendedor = yield (0, usuariosRepository_1.getUsuarioByIdDb)(ticketData.vendedor_id);
     if (!vendedor)
         throw new ApiError_1.ApiError('El vendedor no existe');
+    ticketData.numero = yield (0, ticketsRepository_1.generarNumero)();
     const newTicket = yield (0, ticketsRepository_1.createTicket)(ticketData);
     return {
         message: 'Ticket creado',

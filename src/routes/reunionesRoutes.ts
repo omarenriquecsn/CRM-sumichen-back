@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
 import {
   getReuniones,
-  // getReunionById,
-  getReunionesByVendedor,
+  getReunionById,
+  // getReunionesByVendedor,
   createReunion,
   updateReunion,
   deleteReunion,
@@ -13,7 +13,7 @@ const router: Router = Router();
 
 router.get('/reuniones', asyncHandler(getReuniones));
 
-router.get('/reuniones/:id', asyncHandler(getReunionesByVendedor));
+router.get('/reuniones/:id', asyncHandler(getReunionById));
 
 router.post('/reuniones', asyncHandler(createReunion));
 

@@ -5,7 +5,7 @@ const reunionesControllers_1 = require("../controllers/reunionesControllers");
 const asyncHandler_1 = require("../middlewares/asyncHandler");
 const router = (0, express_1.Router)();
 router.get('/reuniones', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.getReuniones));
-router.get('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.getReunionesByVendedor));
+router.get('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.getReunionById));
 router.post('/reuniones', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.createReunion));
 router.put('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.updateReunion));
 router.delete('/reuniones/:id', (0, asyncHandler_1.asyncHandler)(reunionesControllers_1.deleteReunion));
