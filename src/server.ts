@@ -9,12 +9,8 @@ import { errorHandler } from './middlewares/errorHandler';
 const app = express();
 app.use(
   cors({
-    origin: [
-      'http://localhost:5173',
-      'https://crm-sumichen.vercel.app',
-      'https://crm-sumichen-back.vercel.app'
-    ],
-    credentials: true,
+    origin: '*',
+    credentials: true
   })
 );
 app.use(express.json());

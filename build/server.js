@@ -12,12 +12,8 @@ const swagger_json_1 = __importDefault(require("./docs/swagger.json"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: [
-        'http://localhost:5173',
-        'https://crm-sumichen.vercel.app',
-        'https://crm-sumichen-back.vercel.app'
-    ],
-    credentials: true,
+    origin: '*',
+    credentials: true
 }));
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
