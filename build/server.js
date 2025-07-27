@@ -11,8 +11,20 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_json_1 = __importDefault(require("./docs/swagger.json"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://crm-sumichen.vercel.app',
+    'https://crm-sumichen-back.vercel.app'
+];
 app.use((0, cors_1.default)({
-    origin: '*',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
 }));
 app.use(express_1.default.json());
