@@ -10,23 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = handler;
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://crm-sumichen.vercel.app',
-    'https://crm-sumichen-back.vercel.app'
-];
 function handler(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const origin = req.headers.origin;
-        if (origin && allowedOrigins.includes(origin)) {
-            res.setHeader('Access-Control-Allow-Origin', origin);
-            res.setHeader('Access-Control-Allow-Credentials', 'true');
-        }
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        if (req.method === 'OPTIONS') {
-            return res.status(200).end();
-        }
         // Tu lógica aquí
         const { id } = req.query;
         // Simulación de respuesta
