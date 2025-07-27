@@ -11,14 +11,18 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_json_1 = __importDefault(require("./docs/swagger.json"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
-app.use(errorHandler_1.errorHandler);
-app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: ['http://localhost:5173', 'https://crm-sumichen.vercel.app/', 'https://crm-sumichen-back.vercel.app/'],
+    origin: [
+        'http://localhost:5173',
+        'https://crm-sumichen.vercel.app',
+        'https://crm-sumichen-back.vercel.app'
+    ],
     credentials: true,
 }));
+app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
 app.use(indexRoutes_1.default);
 // Configure Swagger UI
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
+app.use(errorHandler_1.errorHandler);
 exports.default = app;

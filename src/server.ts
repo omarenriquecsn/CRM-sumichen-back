@@ -7,18 +7,21 @@ import swaggerDocument from './docs/swagger.json';
 import { errorHandler } from './middlewares/errorHandler';
 
 const app = express();
-app.use(errorHandler);
-app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://crm-sumichen.vercel.app/', 'https://crm-sumichen-back.vercel.app/'],
+    origin: [
+      'http://localhost:5173',
+      'https://crm-sumichen.vercel.app',
+      'https://crm-sumichen-back.vercel.app'
+    ],
     credentials: true,
-  }),
+  })
 );
+app.use(express.json());
 app.use(morgan('dev'));
 app.use(router);
-
 // Configure Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(errorHandler);
 
 export default app;
