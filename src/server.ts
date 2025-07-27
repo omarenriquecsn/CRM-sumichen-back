@@ -11,7 +11,7 @@ app.use(errorHandler);
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://crm-sumichen.vercel.app/'],
+    origin: ['http://localhost:5173', 'https://crm-sumichen.vercel.app/', 'https://crm-sumichen-back.vercel.app/'],
     credentials: true,
   }),
 );
