@@ -1,4 +1,6 @@
+import { Actividad } from '../entities/Actividades';
 import { Ticket } from '../entities/Tickets';
+import { ActividadesEnum } from '../enums/ActividadesEnum';
 import {
   getTickets,
   getTicketById,
@@ -9,6 +11,11 @@ import {
 } from '../repositories/ticketsRepository';
 import { getUsuarioByIdDb } from '../repositories/usuariosRepository';
 import { ApiError } from '../utils/ApiError';
+import {
+  createActividadesService,
+  getActividadesByIdService,
+  updateActividadesService,
+} from './actividadesServices';
 
 export const getTicketsService = async () => {
   const tickets = await getTickets();
@@ -36,6 +43,17 @@ export const createTicketsService = async (ticketData: Partial<Ticket>) => {
   ticketData.numero = await generarNumero();
 
   const newTicket = await createTicket(ticketData);
+
+  const newActividad: Partial<Actividad> = {
+    titulo: newTicket.titulo,
+    tipo: ActividadesEnum.TAREA,
+    descripcion: newTicket.descripcion,
+    fecha: new Date(),
+    vendedor_id: newTicket.vendedor_id,
+    cliente_id: newTicket.cliente_id,
+  };
+  await createActividadesService(newActividad);
+
   return {
     message: 'Ticket creado',
     data: newTicket,
@@ -47,6 +65,32 @@ export const updateTicketsService = async (
   ticketData: Partial<Ticket>,
 ) => {
   const ticketActualizado = await updateTicket(id, ticketData);
+
+  if (!ticketActualizado) throw new ApiError('No se pudo actualizar el ticket');
+
+  if (
+    ticketActualizado.estado === 'cerrado' ||
+    ticketActualizado.estado === 'resuelto'
+  ) {
+    const actividades = await getActividadesByIdService(
+      ticketActualizado.vendedor_id,
+    );
+
+    const actividadActualizada = actividades.find(
+      (actividad) =>
+        actividad.cliente_id === ticketActualizado.cliente_id &&
+        actividad.titulo === ticketActualizado.titulo &&
+        actividad.descripcion === ticketActualizado.descripcion &&
+        new Date(actividad.fecha_creacion).getDate() ===
+          new Date(ticketActualizado.fecha_creacion).getDate(),
+    );
+    if (!actividadActualizada)
+      throw new Error('No se pudo actualizar la actividad');
+
+    await updateActividadesService(actividadActualizada.id, {
+      completado: true,
+    });
+  }
   return {
     message: 'Ticket actualizado',
     data: ticketActualizado,

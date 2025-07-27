@@ -1,5 +1,6 @@
 import { Cliente } from "../entities/Clientes";
 import { getClienteById, getClientes, createCliente, updateCliente, deleteCliente } from "../repositories/clientesRepository";
+import { updateMetasClientesService } from "./metasServices";
 
 export const getClientesService = async () => {
   const clientes = await getClientes();
@@ -18,6 +19,8 @@ export const getClientesByIdService = async (id: string) => {
 
 export const createClientesService = async (clienteData: Partial<Cliente>) => {
   const nuevoCliente = await createCliente(clienteData);
+  const mesActual = new Date().getMonth() + 1
+  updateMetasClientesService(nuevoCliente.vendedor_id, 'clientes_actuales', 1, mesActual)
   return nuevoCliente;
 };
 

@@ -10,9 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTicketsService = exports.updateTicketsService = exports.createTicketsService = exports.getTicketsByIdService = exports.getTicketsByVendedorService = exports.getTicketsService = void 0;
+const ActividadesEnum_1 = require("../enums/ActividadesEnum");
 const ticketsRepository_1 = require("../repositories/ticketsRepository");
 const usuariosRepository_1 = require("../repositories/usuariosRepository");
 const ApiError_1 = require("../utils/ApiError");
+const actividadesServices_1 = require("./actividadesServices");
 const getTicketsService = () => __awaiter(void 0, void 0, void 0, function* () {
     const tickets = yield (0, ticketsRepository_1.getTickets)();
     return tickets;
@@ -37,6 +39,15 @@ const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, f
         throw new ApiError_1.ApiError('El vendedor no existe');
     ticketData.numero = yield (0, ticketsRepository_1.generarNumero)();
     const newTicket = yield (0, ticketsRepository_1.createTicket)(ticketData);
+    const newActividad = {
+        titulo: newTicket.titulo,
+        tipo: ActividadesEnum_1.ActividadesEnum.TAREA,
+        descripcion: newTicket.descripcion,
+        fecha: new Date(),
+        vendedor_id: newTicket.vendedor_id,
+        cliente_id: newTicket.cliente_id,
+    };
+    yield (0, actividadesServices_1.createActividadesService)(newActividad);
     return {
         message: 'Ticket creado',
         data: newTicket,
@@ -45,6 +56,22 @@ const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, f
 exports.createTicketsService = createTicketsService;
 const updateTicketsService = (id, ticketData) => __awaiter(void 0, void 0, void 0, function* () {
     const ticketActualizado = yield (0, ticketsRepository_1.updateTicket)(id, ticketData);
+    if (!ticketActualizado)
+        throw new ApiError_1.ApiError('No se pudo actualizar el ticket');
+    if (ticketActualizado.estado === 'cerrado' ||
+        ticketActualizado.estado === 'resuelto') {
+        const actividades = yield (0, actividadesServices_1.getActividadesByIdService)(ticketActualizado.vendedor_id);
+        const actividadActualizada = actividades.find((actividad) => actividad.cliente_id === ticketActualizado.cliente_id &&
+            actividad.titulo === ticketActualizado.titulo &&
+            actividad.descripcion === ticketActualizado.descripcion &&
+            new Date(actividad.fecha_creacion).getDate() ===
+                new Date(ticketActualizado.fecha_creacion).getDate());
+        if (!actividadActualizada)
+            throw new Error('No se pudo actualizar la actividad');
+        yield (0, actividadesServices_1.updateActividadesService)(actividadActualizada.id, {
+            completado: true,
+        });
+    }
     return {
         message: 'Ticket actualizado',
         data: ticketActualizado,

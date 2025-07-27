@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMetasService = exports.updateMetasService = exports.createMetasService = exports.getMetasByIdService = exports.getMetasService = void 0;
+exports.deleteMetasService = exports.updateMetasService = exports.updateMetasClientesService = exports.createMetasService = exports.getMetasByIdService = exports.getMetasService = void 0;
 const metasRepository_1 = require("../repositories/metasRepository");
 const pedidosServices_1 = require("./pedidosServices");
 const clientesServices_1 = require("./clientesServices");
@@ -35,6 +35,16 @@ const createMetasService = (metaData) => __awaiter(void 0, void 0, void 0, funct
     return nuevaMeta;
 });
 exports.createMetasService = createMetasService;
+const updateMetasClientesService = (id, accion, valor, mes) => __awaiter(void 0, void 0, void 0, function* () {
+    const metas = yield (0, exports.getMetasByIdService)(id);
+    metas.map((meta) => __awaiter(void 0, void 0, void 0, function* () {
+        if (meta.mes === mes) {
+            meta[accion] = valor;
+            yield (0, metasRepository_1.updateMeta)(id, meta);
+        }
+    }));
+});
+exports.updateMetasClientesService = updateMetasClientesService;
 const updateMetasService = (id, metaData) => __awaiter(void 0, void 0, void 0, function* () {
     const metaActualizada = yield (0, metasRepository_1.updateMeta)(id, metaData);
     return metaActualizada;

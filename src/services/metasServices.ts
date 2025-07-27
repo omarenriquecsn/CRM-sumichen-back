@@ -45,6 +45,24 @@ export const createMetasService = async (metaData: Partial<Meta>) => {
   return nuevaMeta;
 };
 
+export const updateMetasClientesService = async (
+  id: string,
+  accion: 'ventas_actuales' | 'clientes_actuales',
+  valor: number,
+  mes: number
+) => {
+  const metas= await getMetasByIdService(id)
+
+metas.map(async(meta) => {
+  if(meta.mes === mes){
+
+    meta[accion] = valor
+    await updateMeta(id, meta)
+  }
+})
+}
+
+
 export const updateMetasService = async (
   id: string,
   metaData: Partial<Meta>,

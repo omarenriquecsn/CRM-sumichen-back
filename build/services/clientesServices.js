@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteClientesService = exports.updateClientesService = exports.createClientesService = exports.getClientesByIdService = exports.getClientesVendedorService = exports.getClientesService = void 0;
 const clientesRepository_1 = require("../repositories/clientesRepository");
+const metasServices_1 = require("./metasServices");
 const getClientesService = () => __awaiter(void 0, void 0, void 0, function* () {
     const clientes = yield (0, clientesRepository_1.getClientes)();
     return clientes;
@@ -28,6 +29,8 @@ const getClientesByIdService = (id) => __awaiter(void 0, void 0, void 0, functio
 exports.getClientesByIdService = getClientesByIdService;
 const createClientesService = (clienteData) => __awaiter(void 0, void 0, void 0, function* () {
     const nuevoCliente = yield (0, clientesRepository_1.createCliente)(clienteData);
+    const mesActual = new Date().getMonth() + 1;
+    (0, metasServices_1.updateMetasClientesService)(nuevoCliente.vendedor_id, 'clientes_actuales', 1, mesActual);
     return nuevoCliente;
 });
 exports.createClientesService = createClientesService;
