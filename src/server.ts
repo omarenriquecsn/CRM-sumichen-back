@@ -9,7 +9,12 @@ import { errorHandler } from './middlewares/errorHandler';
 const app = express();
 app.use(errorHandler);
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://TU_DOMINIO_FRONTEND'],
+    credentials: true,
+  }),
+);
 app.use(morgan('dev'));
 app.use(router);
 
