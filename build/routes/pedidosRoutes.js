@@ -11,6 +11,7 @@ const router = (0, express_1.Router)();
 router.get('/pedidos', jwtHandler_1.default, (0, asyncHandler_1.asyncHandler)(pedidosControllers_1.getPedidos));
 router.get('/pedidos/:id', jwtHandler_1.default, (0, asyncHandler_1.asyncHandler)(pedidosControllers_1.getPedidosByVendedor));
 router.post('/pedidos', jwtHandler_1.default, (0, asyncHandler_1.asyncHandler)(pedidosControllers_1.createPedido));
+router.post('/pedidos/:id/evidencia', jwtHandler_1.default, ...pedidosControllers_1.subirEvidencia);
 router.put('/pedidos/:id', jwtHandler_1.default, (0, asyncHandler_1.asyncHandler)(pedidosControllers_1.updatePedido));
 router.delete('/pedidos/:id', jwtHandler_1.default, (0, asyncHandler_1.asyncHandler)(pedidosControllers_1.deletePedido));
 exports.default = router;

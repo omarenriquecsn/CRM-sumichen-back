@@ -1,3 +1,39 @@
+import { createClient } from '@supabase/supabase-js';
+import multer from 'multer';
+
+const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
+const upload = multer();
+
+export const subirEvidencia = [
+  upload.single('file'),
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se envió ningún archivo' });
+    }
+    // Subir archivo a Supabase Storage
+    const fileExt = req.file.originalname.split('.').pop();
+    const fileName = `pedido_${id}_${Date.now()}.${fileExt}`;
+    const { data, error } = await supabase.storage
+      .from('evidencias')
+      .upload(fileName, req.file.buffer, {
+        contentType: req.file.mimetype,
+        upsert: true,
+      });
+    if (error) {
+      return res.status(500).json({ error: 'Error al subir archivo a Supabase', details: error.message });
+    }
+    // Construir URL pública
+    const { publicUrl } = supabase.storage.from('evidencias').getPublicUrl(fileName).data;
+    // Actualizar pedido con la URL
+    const actualizado = await updatePedidosService(id, { evidencia_url: publicUrl });
+    if (!actualizado) {
+      return res.status(500).json({ error: 'No se pudo actualizar el pedido con la evidencia' });
+    }
+    res.json({ url: publicUrl });
+  }
+];
+
 import { Request, Response } from 'express';
 import {
   getPedidosService,

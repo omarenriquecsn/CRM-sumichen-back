@@ -84,6 +84,9 @@ export class Pedido {
   )
   productos_pedido: ProductosPedido[];
 
+  @Column({ type: 'text', nullable: true })
+  evidencia_url?: string;
+
   @Column({
     type: 'enum',
     enum: EstadoPedidoEnum,

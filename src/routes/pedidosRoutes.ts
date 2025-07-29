@@ -6,6 +6,7 @@ import {
   updatePedido,
   deletePedido,
   getPedidosByVendedor,
+  subirEvidencia,
 } from '../controllers/pedidosControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
 import verificarToken from '../middlewares/jwtHandler';
@@ -17,6 +18,8 @@ router.get('/pedidos',verificarToken, asyncHandler(getPedidos));
 router.get('/pedidos/:id',verificarToken, asyncHandler(getPedidosByVendedor));
 
 router.post('/pedidos',verificarToken, asyncHandler(createPedido));
+
+router.post('/pedidos/:id/evidencia', verificarToken, ...subirEvidencia);
 
 router.put('/pedidos/:id',verificarToken, asyncHandler(updatePedido));
 
