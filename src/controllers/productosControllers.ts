@@ -4,9 +4,16 @@ import {
   getProductoByIdService,
   createProductoService,
   updateProductoService,
-  
 } from '../services/productosServices';
 import { ApiError } from '../utils/ApiError';
+import { createClient } from '@supabase/supabase-js';
+import multer from 'multer';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_KEY!,
+);
+const upload = multer();
 
 export const getProductos = async (req: Request, res: Response) => {
   const productos = await getProductosService();
@@ -36,3 +43,22 @@ export const updateProducto = async (req: Request, res: Response) => {
   res.json(productoActualizado);
 };
 
+export const subirInventario = [
+  upload.single('file'),
+  async (req: Request, res: Response) => {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se ha subido ningún archivo' });
+    }
+    const fileName = 'inventario.xlsx';
+
+    const { data, error } = await supabase.storage
+      .from('inventario')
+      .upload(fileName, req.file.buffer);
+
+    if (error) {
+      return res.status(500).json({ error: 'Error al subir el archivo' });
+    }
+
+    res.status(200).json({ message: 'Archivo subido exitosamente', fileName });
+  },
+];

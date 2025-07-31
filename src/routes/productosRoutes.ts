@@ -4,6 +4,7 @@ import {
   getProductoById,
   createProducto,
   updateProducto,
+  subirInventario,
 } from '../controllers/productosControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
 
@@ -15,7 +16,8 @@ router.get('/productos/:id', asyncHandler(getProductoById));
 
 router.post('/productos', asyncHandler(createProducto));
 
-router.put('/productos/:id', asyncHandler(updateProducto));
+router.post('/productos/excel', ...subirInventario);
 
+router.put('/productos/:id', asyncHandler(updateProducto));
 
 export default router;

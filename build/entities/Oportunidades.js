@@ -22,7 +22,7 @@ __decorate([
     __metadata("design:type", String)
 ], Oportunidad.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'cliente_id' }),
+    (0, typeorm_1.Column)({ name: 'cliente_id', unique: true }),
     __metadata("design:type", String)
 ], Oportunidad.prototype, "cliente_id", void 0);
 __decorate([

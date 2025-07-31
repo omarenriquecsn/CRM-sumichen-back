@@ -7,5 +7,6 @@ const router = (0, express_1.Router)();
 router.get('/productos', (0, asyncHandler_1.asyncHandler)(productosControllers_1.getProductos));
 router.get('/productos/:id', (0, asyncHandler_1.asyncHandler)(productosControllers_1.getProductoById));
 router.post('/productos', (0, asyncHandler_1.asyncHandler)(productosControllers_1.createProducto));
+router.post('/productos/excel', ...productosControllers_1.subirInventario);
 router.put('/productos/:id', (0, asyncHandler_1.asyncHandler)(productosControllers_1.updateProducto));
 exports.default = router;

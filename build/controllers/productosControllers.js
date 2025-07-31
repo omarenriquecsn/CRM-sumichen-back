@@ -8,10 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProducto = exports.createProducto = exports.getProductoById = exports.getProductos = void 0;
+exports.subirInventario = exports.updateProducto = exports.createProducto = exports.getProductoById = exports.getProductos = void 0;
 const productosServices_1 = require("../services/productosServices");
 const ApiError_1 = require("../utils/ApiError");
+const supabase_js_1 = require("@supabase/supabase-js");
+const multer_1 = __importDefault(require("multer"));
+const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const upload = (0, multer_1.default)();
 const getProductos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productos = yield (0, productosServices_1.getProductosService)();
     if (productos.length === 0)
@@ -42,3 +49,19 @@ const updateProducto = (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.json(productoActualizado);
 });
 exports.updateProducto = updateProducto;
+exports.subirInventario = [
+    upload.single('file'),
+    (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No se ha subido ningún archivo' });
+        }
+        const fileName = 'inventario.xlsx';
+        const { data, error } = yield supabase.storage
+            .from('inventario')
+            .upload(fileName, req.file.buffer);
+        if (error) {
+            return res.status(500).json({ error: 'Error al subir el archivo' });
+        }
+        res.status(200).json({ message: 'Archivo subido exitosamente', fileName });
+    }),
+];
