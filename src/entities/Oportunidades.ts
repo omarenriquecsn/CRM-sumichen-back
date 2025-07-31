@@ -16,7 +16,7 @@ export class Oportunidad {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'cliente_id' })
+  @Column({ name: 'cliente_id', unique: true })
   cliente_id: string;
 
   @ManyToOne(() => Cliente, { nullable: false })
