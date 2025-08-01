@@ -53,7 +53,10 @@ export const subirInventario = [
 
     const { data, error } = await supabase.storage
       .from('inventario')
-      .upload(fileName, req.file.buffer);
+      .upload(fileName, req.file.buffer, {
+        contentType: req.file.mimetype,
+        upsert: true,
+      });
 
     if (error) {
       return res.status(500).json({ error: 'Error al subir el archivo' });
