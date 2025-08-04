@@ -1,5 +1,5 @@
 export enum EstadoClienteEnum {
-    ACTIVO = 'activo',
-    INACTIVO = 'inactivo',
-    PROSPECTO = 'prospecto',
+  ACTIVO = 'activo',
+  INACTIVO = 'inactivo',
+  PROSPECTO = 'prospecto',
 }

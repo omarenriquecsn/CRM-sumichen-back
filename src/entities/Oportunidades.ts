@@ -42,7 +42,12 @@ export class Oportunidad {
   @Column({ type: 'int' })
   probabilidad: number;
 
-  @Column({ type: 'enum', enum: EtapaDeVentaEnum, default: EtapaDeVentaEnum.INICIAL, nullable: true })
+  @Column({
+    type: 'enum',
+    enum: EtapaDeVentaEnum,
+    default: EtapaDeVentaEnum.INICIAL,
+    nullable: true,
+  })
   etapa: EtapaDeVentaEnum;
 
   @Column({ type: 'timestamptz', nullable: true })

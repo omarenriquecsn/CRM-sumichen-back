@@ -14,7 +14,7 @@ const dataBaseConfig_1 = require("../config/dataBaseConfig");
 const Metas_1 = require("../entities/Metas");
 const getMetas = () => __awaiter(void 0, void 0, void 0, function* () {
     const MetaRepository = dataBaseConfig_1.AppDataSource.getRepository(Metas_1.Meta);
-    return yield MetaRepository.find();
+    return yield MetaRepository.find({ order: { mes: 'ASC' } });
 });
 exports.getMetas = getMetas;
 const getMetaById = (id) => __awaiter(void 0, void 0, void 0, function* () {

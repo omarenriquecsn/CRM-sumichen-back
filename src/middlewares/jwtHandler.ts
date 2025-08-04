@@ -27,14 +27,13 @@ const verificarToken = (req: Request, res: Response, next: NextFunction) => {
   const token = authHeader?.split(' ')[1];
 
   if (!token) return res.status(401).json({ error: 'No hay token' });
-  
 
   const secret = process.env.SUPABASE_JWT_SECRET;
   if (!secret) return res.status(500).json({ error: 'No hay clave secret' });
 
   try {
     const decoded = jwt.verify(token, secret) as SupabaseUser;
-    
+
     req.user = decoded;
     next();
   } catch (err) {

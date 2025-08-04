@@ -4,12 +4,15 @@ import { EstadoTicketEnum } from '../enums/EstadoTicketEnum';
 
 export const getTickets = async () => {
   const ticketRepository = AppDataSource.getRepository(Ticket);
-  return await ticketRepository.find();
+  return await ticketRepository.find({ order: { fecha_creacion: 'DESC' } });
 };
 
 export const getTicketById = async (id: string) => {
   const ticketRepository = AppDataSource.getRepository(Ticket);
-  return await ticketRepository.find({ where: { vendedor_id: id } });
+  return await ticketRepository.find({
+    where: { vendedor_id: id },
+    order: { fecha_creacion: 'DESC' },
+  });
 };
 
 export const createTicket = async (ticketData: Partial<Ticket>) => {
@@ -30,7 +33,6 @@ export const deleteTicket = async (id: string) => {
     estado: EstadoTicketEnum.CERRADO,
   });
 };
-
 
 export async function generarNumero(): Promise<string> {
   const repo = AppDataSource.getRepository(Ticket);

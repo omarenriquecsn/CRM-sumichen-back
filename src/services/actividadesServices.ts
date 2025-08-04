@@ -1,6 +1,11 @@
-import { Actividad } from "../entities/Actividades";
-import { getActividads, getActividadById, createActividad, updateActividad, deleteActividad } from "../repositories/actividadesRepository";
-
+import { Actividad } from '../entities/Actividades';
+import {
+  getActividads,
+  getActividadById,
+  createActividad,
+  updateActividad,
+  deleteActividad,
+} from '../repositories/actividadesRepository';
 
 export const getActividadesService = async () => {
   const actividades = await getActividads();
@@ -13,15 +18,20 @@ export const getActividadesByIdService = async (id: string) => {
   const actividades = await getActividadById(id);
   if (actividades.length === 0)
     throw new Error('No hay actividades para mostrar');
-  return actividades; 
+  return actividades;
 };
 
-export const createActividadesService = async ( ActividadData: Partial<Actividad>) => {
-  const actividadCreada = await createActividad( ActividadData);
+export const createActividadesService = async (
+  ActividadData: Partial<Actividad>,
+) => {
+  const actividadCreada = await createActividad(ActividadData);
   return actividadCreada;
 };
 
-export const updateActividadesService = async (id: string, ActividadData: Partial<Actividad>) => {
+export const updateActividadesService = async (
+  id: string,
+  ActividadData: Partial<Actividad>,
+) => {
   const actividadActualizada = await updateActividad(id, ActividadData);
   return actividadActualizada;
 };

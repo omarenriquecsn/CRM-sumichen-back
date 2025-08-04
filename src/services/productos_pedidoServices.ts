@@ -13,10 +13,12 @@ export const getProductos_pedidoService = async () => {
   return productos_pedido;
 };
 
-export const getProductosPedidosByVendedorService = async (pedido_id: string) => {
+export const getProductosPedidosByVendedorService = async (
+  pedido_id: string,
+) => {
   const productos_pedido = await getProductosPedidos();
   return productos_pedido.filter((pp) => pp.pedido_id === pedido_id);
-}
+};
 
 export const getProductos_pedidoByIdService = async (id: string) => {
   const productos_pedido = await getProductosPedidoById(id);

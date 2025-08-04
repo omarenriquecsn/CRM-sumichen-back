@@ -1,4 +1,4 @@
 export enum TipoPagoEnum {
-    CONTADO='contado',
-    CREDITO='credito'
+  CONTADO = 'contado',
+  CREDITO = 'credito',
 }

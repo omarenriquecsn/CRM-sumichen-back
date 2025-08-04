@@ -13,16 +13,16 @@ import verificarToken from '../middlewares/jwtHandler';
 
 const router: Router = Router();
 
-router.get('/pedidos',verificarToken, asyncHandler(getPedidos));
+router.get('/pedidos', verificarToken, asyncHandler(getPedidos));
 
-router.get('/pedidos/:id',verificarToken, asyncHandler(getPedidosByVendedor));
+router.get('/pedidos/:id', verificarToken, asyncHandler(getPedidosByVendedor));
 
-router.post('/pedidos',verificarToken, asyncHandler(createPedido));
+router.post('/pedidos', verificarToken, asyncHandler(createPedido));
 
 router.post('/pedidos/:id/evidencia', verificarToken, ...subirEvidencia);
 
-router.put('/pedidos/:id',verificarToken, asyncHandler(updatePedido));
+router.put('/pedidos/:id', verificarToken, asyncHandler(updatePedido));
 
-router.delete('/pedidos/:id',verificarToken, asyncHandler(deletePedido));
+router.delete('/pedidos/:id', verificarToken, asyncHandler(deletePedido));
 
 export default router;

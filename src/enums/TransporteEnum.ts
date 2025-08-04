@@ -1,4 +1,4 @@
 export enum TransporteEnum {
-    INTERNO='interno',
-    EXTERNO='externo'
+  INTERNO = 'interno',
+  EXTERNO = 'externo',
 }

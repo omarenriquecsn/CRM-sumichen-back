@@ -54,25 +54,25 @@ export const updateReunionesService = async (
   reunionData: Partial<Reunion>,
 ) => {
   const reunionActualizada = await updateReunion(id, reunionData);
- 
+
   if (!reunionActualizada) throw new Error('No se pudo actualizar la reunion');
-  
+
   if (reunionActualizada.estado === 'completada') {
     const allActividades = await getActividadesByIdService(
       reunionActualizada.vendedor_id,
     );
 
-    
     const actividadActualizada = allActividades.find(
       (actividad) =>
         actividad.cliente_id === reunionActualizada.cliente_id &&
         actividad.titulo === reunionActualizada.titulo &&
         actividad.descripcion === reunionActualizada.descripcion &&
-        new Date(actividad.fecha_creacion).getDate() === new Date(reunionActualizada.fecha_creacion).getDate()
-        
+        new Date(actividad.fecha_creacion).getDate() ===
+          new Date(reunionActualizada.fecha_creacion).getDate(),
     );
-    
-if (!actividadActualizada) throw new Error('No se pudo actualizar la actividad');
+
+    if (!actividadActualizada)
+      throw new Error('No se pudo actualizar la actividad');
     await updateActividadesService(actividadActualizada.id, {
       completado: true,
     });

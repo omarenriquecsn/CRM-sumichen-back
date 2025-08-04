@@ -4,12 +4,18 @@ import { Reunion } from '../entities/Reuniones';
 
 export const getReunions = async () => {
   const ReunionRepository = AppDataSource.getRepository(Reunion);
-  return await ReunionRepository.find();
+  return await ReunionRepository.find({
+    order: { fecha_creacion: 'DESC' },
+  });
 };
 
 export const getReunionById = async (id: string) => {
   const ReunionRepository = AppDataSource.getRepository(Reunion);
-  return await ReunionRepository.find({ where: { vendedor_id: id }, relations: ['cliente'] });
+  return await ReunionRepository.find({
+    where: { vendedor_id: id },
+    relations: ['cliente'],
+    order: { fecha_creacion: 'DESC' },
+  });
 };
 
 export const createReunion = async (ReunionData: Partial<Reunion>) => {

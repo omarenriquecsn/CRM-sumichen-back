@@ -17,7 +17,7 @@ export const getPedidosService = async () => {
 export const getPedidosByVendedorService = async (id: string) => {
   const pedidos = await getPedidos();
   return pedidos.filter((pedido) => pedido.vendedor_id === id);
-}
+};
 
 export const getPedidosByIdService = async (id: string) => {
   const pedido = await getPedidoById(id);

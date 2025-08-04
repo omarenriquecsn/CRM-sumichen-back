@@ -14,13 +14,17 @@ const dataBaseConfig_1 = require("../config/dataBaseConfig");
 const Pedidos_1 = require("../entities/Pedidos");
 const getPedidos = () => __awaiter(void 0, void 0, void 0, function* () {
     const PedidoRepository = dataBaseConfig_1.AppDataSource.getRepository(Pedidos_1.Pedido);
-    return yield PedidoRepository.find();
+    return yield PedidoRepository.find({
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getPedidos = getPedidos;
 const getPedidoById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const PedidoRepository = dataBaseConfig_1.AppDataSource.getRepository(Pedidos_1.Pedido);
-    return yield PedidoRepository.find({ where: { vendedor_id: id },
+    return yield PedidoRepository.find({
+        where: { vendedor_id: id },
         relations: ['productos_pedido'],
+        order: { fecha_creacion: 'DESC' },
     });
 });
 exports.getPedidoById = getPedidoById;

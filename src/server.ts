@@ -10,7 +10,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'https://crm-sumichen.vercel.app',
-  'https://crm-sumichen-back.vercel.app'
+  'https://crm-sumichen-back.vercel.app',
 ];
 app.use(
   cors({
@@ -21,8 +21,8 @@ app.use(
         callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true
-  })
+    credentials: true,
+  }),
 );
 app.use(express.json());
 app.use(morgan('dev'));

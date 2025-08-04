@@ -20,9 +20,11 @@ export const getMetasByIdService = async (id: string) => {
 };
 
 export const createMetasService = async (metaData: Partial<Meta>) => {
-
-  if(!metaData.vendedor_id) throw new Error('No se ha proporcionado un vendedor');
-  const vendedorPedidos = await getPedidosByVendedorService(metaData.vendedor_id);
+  if (!metaData.vendedor_id)
+    throw new Error('No se ha proporcionado un vendedor');
+  const vendedorPedidos = await getPedidosByVendedorService(
+    metaData.vendedor_id,
+  );
   const pedidosFiltrados = vendedorPedidos.filter(
     (pedido) => pedido.estado === 'procesado',
   );
@@ -49,19 +51,17 @@ export const updateMetasClientesService = async (
   id: string,
   accion: 'ventas_actuales' | 'clientes_actuales',
   valor: number,
-  mes: number
+  mes: number,
 ) => {
-  const metas= await getMetasByIdService(id)
+  const metas = await getMetasByIdService(id);
 
-metas.map(async(meta) => {
-  if(meta.mes === mes){
-
-    meta[accion] = valor
-    await updateMeta(id, meta)
-  }
-})
-}
-
+  metas.map(async (meta) => {
+    if (meta.mes === mes) {
+      meta[accion] = valor;
+      await updateMeta(id, meta);
+    }
+  });
+};
 
 export const updateMetasService = async (
   id: string,

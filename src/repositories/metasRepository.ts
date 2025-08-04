@@ -3,7 +3,7 @@ import { Meta } from '../entities/Metas';
 
 export const getMetas = async () => {
   const MetaRepository = AppDataSource.getRepository(Meta);
-  return await MetaRepository.find();
+  return await MetaRepository.find({ order: { mes: 'ASC' } });
 };
 
 export const getMetaById = async (id: string) => {

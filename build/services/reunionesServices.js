@@ -54,7 +54,8 @@ const updateReunionesService = (id, reunionData) => __awaiter(void 0, void 0, vo
         const actividadActualizada = allActividades.find((actividad) => actividad.cliente_id === reunionActualizada.cliente_id &&
             actividad.titulo === reunionActualizada.titulo &&
             actividad.descripcion === reunionActualizada.descripcion &&
-            new Date(actividad.fecha_creacion).getDate() === new Date(reunionActualizada.fecha_creacion).getDate());
+            new Date(actividad.fecha_creacion).getDate() ===
+                new Date(reunionActualizada.fecha_creacion).getDate());
         if (!actividadActualizada)
             throw new Error('No se pudo actualizar la actividad');
         yield (0, actividadesServices_1.updateActividadesService)(actividadActualizada.id, {

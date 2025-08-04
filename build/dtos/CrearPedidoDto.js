@@ -4,6 +4,5 @@ exports.CrearPedidoDto = void 0;
 class Producto_pedido {
 }
 class CrearPedidoDto {
-    ;
 }
 exports.CrearPedidoDto = CrearPedidoDto;

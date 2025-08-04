@@ -14,7 +14,9 @@ const dataBaseConfig_1 = require("../config/dataBaseConfig");
 const Oportunidades_1 = require("../entities/Oportunidades");
 const getOportunidads = () => __awaiter(void 0, void 0, void 0, function* () {
     const OportunidadRepository = dataBaseConfig_1.AppDataSource.getRepository(Oportunidades_1.Oportunidad);
-    return yield OportunidadRepository.find();
+    return yield OportunidadRepository.find({
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getOportunidads = getOportunidads;
 const getOportunidadById = (id) => __awaiter(void 0, void 0, void 0, function* () {

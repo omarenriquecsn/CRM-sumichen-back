@@ -1,4 +1,4 @@
-import { IsDecimal, IsInt, IsUUID, Min } from "class-validator";
+import { IsDecimal, IsInt, IsUUID, Min } from 'class-validator';
 
 export class CreateProductosPedidoDto {
   @IsUUID()

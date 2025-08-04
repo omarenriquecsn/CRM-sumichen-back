@@ -14,7 +14,7 @@ const app = (0, express_1.default)();
 const allowedOrigins = [
     'http://localhost:5173',
     'https://crm-sumichen.vercel.app',
-    'https://crm-sumichen-back.vercel.app'
+    'https://crm-sumichen-back.vercel.app',
 ];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
@@ -25,7 +25,7 @@ app.use((0, cors_1.default)({
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
+    credentials: true,
 }));
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));

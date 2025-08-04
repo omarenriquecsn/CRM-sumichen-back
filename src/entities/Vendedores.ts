@@ -7,11 +7,10 @@ import {
 } from 'typeorm';
 import { RolesEnum } from '../enums/RolesEnum';
 
-@Entity({ name: 'vendedores'})
+@Entity({ name: 'vendedores' })
 export class Vendedor {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
 
   @Column()
   supabase_id: string;
@@ -22,7 +21,7 @@ export class Vendedor {
   @Column()
   apellido: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   telefono?: string;
 
   @Column({ type: 'enum', enum: RolesEnum, default: RolesEnum.VENDEDOR })

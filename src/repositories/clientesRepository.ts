@@ -4,12 +4,17 @@ import { Cliente } from '../entities/Clientes';
 
 export const getClientes = async () => {
   const ClienteRepository = AppDataSource.getRepository(Cliente);
-  return await ClienteRepository.find();
+  return await ClienteRepository.find({
+    order: { fecha_creacion: 'DESC' },
+  });
 };
 
 export const getClienteById = async (id: string) => {
   const ClienteRepository = AppDataSource.getRepository(Cliente);
-  return await ClienteRepository.find({ where: { vendedor_id: id } });
+  return await ClienteRepository.find({
+    where: { vendedor_id: id },
+    order: { fecha_creacion: 'DESC' },
+  });
 };
 
 export const createCliente = async (ClienteData: Partial<Cliente>) => {
@@ -26,7 +31,7 @@ export const updateCliente = async (
     throw new Error('No se proporcionaron datos para actualizar al cliente.');
   }
 
-  console.log(ClienteData)
+  console.log(ClienteData);
   const ClienteRepository = AppDataSource.getRepository(Cliente);
   await ClienteRepository.update(id, ClienteData);
   return await ClienteRepository.findOneBy({ id });

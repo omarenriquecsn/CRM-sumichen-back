@@ -56,7 +56,12 @@ __decorate([
     __metadata("design:type", Number)
 ], Oportunidad.prototype, "probabilidad", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: EtapaDeVentaEnum_1.EtapaDeVentaEnum, default: EtapaDeVentaEnum_1.EtapaDeVentaEnum.INICIAL, nullable: true }),
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: EtapaDeVentaEnum_1.EtapaDeVentaEnum,
+        default: EtapaDeVentaEnum_1.EtapaDeVentaEnum.INICIAL,
+        nullable: true,
+    }),
     __metadata("design:type", String)
 ], Oportunidad.prototype, "etapa", void 0);
 __decorate([

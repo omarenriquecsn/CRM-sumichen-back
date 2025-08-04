@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import multer from 'multer';
 
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_KEY!,
+);
 const upload = multer();
 
 export const subirEvidencia = [
@@ -21,17 +24,28 @@ export const subirEvidencia = [
         upsert: true,
       });
     if (error) {
-      return res.status(500).json({ error: 'Error al subir archivo a Supabase', details: error.message });
+      return res
+        .status(500)
+        .json({
+          error: 'Error al subir archivo a Supabase',
+          details: error.message,
+        });
     }
     // Construir URL pública
-    const { publicUrl } = supabase.storage.from('evidencias').getPublicUrl(fileName).data;
+    const { publicUrl } = supabase.storage
+      .from('evidencias')
+      .getPublicUrl(fileName).data;
     // Actualizar pedido con la URL
-    const actualizado = await updatePedidosService(id, { evidencia_url: publicUrl });
+    const actualizado = await updatePedidosService(id, {
+      evidencia_url: publicUrl,
+    });
     if (!actualizado) {
-      return res.status(500).json({ error: 'No se pudo actualizar el pedido con la evidencia' });
+      return res
+        .status(500)
+        .json({ error: 'No se pudo actualizar el pedido con la evidencia' });
     }
     res.json({ url: publicUrl });
-  }
+  },
 ];
 
 import { Request, Response } from 'express';
@@ -47,7 +61,7 @@ import { ApiError } from '../utils/ApiError';
 
 export const getPedidos = async (req: Request, res: Response) => {
   const pedidos = await getPedidosService();
-  if(!pedidos) return []
+  if (!pedidos) return [];
   res.json(pedidos);
 };
 
@@ -63,7 +77,7 @@ export const getPedidosByVendedor = async (req: Request, res: Response) => {
   const pedidos = await getPedidosByVendedorService(id);
   if (pedidos.length === 0) throw new ApiError('No hay pedidos disponibles');
   res.json(pedidos);
-}
+};
 
 export const createPedido = async (req: Request, res: Response) => {
   const nuevoPedido = await createPedidosService(req.body);

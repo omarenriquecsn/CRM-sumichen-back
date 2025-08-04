@@ -16,12 +16,15 @@ const Tickets_1 = require("../entities/Tickets");
 const EstadoTicketEnum_1 = require("../enums/EstadoTicketEnum");
 const getTickets = () => __awaiter(void 0, void 0, void 0, function* () {
     const ticketRepository = dataBaseConfig_1.AppDataSource.getRepository(Tickets_1.Ticket);
-    return yield ticketRepository.find();
+    return yield ticketRepository.find({ order: { fecha_creacion: 'DESC' } });
 });
 exports.getTickets = getTickets;
 const getTicketById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const ticketRepository = dataBaseConfig_1.AppDataSource.getRepository(Tickets_1.Ticket);
-    return yield ticketRepository.find({ where: { vendedor_id: id } });
+    return yield ticketRepository.find({
+        where: { vendedor_id: id },
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getTicketById = getTicketById;
 const createTicket = (ticketData) => __awaiter(void 0, void 0, void 0, function* () {

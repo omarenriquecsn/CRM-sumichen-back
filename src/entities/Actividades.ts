@@ -5,7 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { Cliente } from './Clientes';
 import { Vendedor } from './Vendedores';
@@ -30,8 +30,12 @@ export class Actividad {
   @JoinColumn({ name: 'vendedor_id' })
   vendedor: Vendedor;
 
-  @Column({ type: 'enum', enum: ActividadesEnum, default: ActividadesEnum.LLAMADA })
-  tipo: ActividadesEnum; 
+  @Column({
+    type: 'enum',
+    enum: ActividadesEnum,
+    default: ActividadesEnum.LLAMADA,
+  })
+  tipo: ActividadesEnum;
 
   @Column({ type: 'varchar', length: 150 })
   titulo: string;

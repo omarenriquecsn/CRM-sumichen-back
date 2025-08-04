@@ -35,5 +35,3 @@ export const deleteUsuario = async (id: string) => {
   const userRepository = AppDataSource.getRepository(Vendedor);
   return await userRepository.update(id, { activo: false });
 };
-
-

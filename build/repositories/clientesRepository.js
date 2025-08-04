@@ -15,12 +15,17 @@ const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
 const Clientes_1 = require("../entities/Clientes");
 const getClientes = () => __awaiter(void 0, void 0, void 0, function* () {
     const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
-    return yield ClienteRepository.find();
+    return yield ClienteRepository.find({
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getClientes = getClientes;
 const getClienteById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
-    return yield ClienteRepository.find({ where: { vendedor_id: id } });
+    return yield ClienteRepository.find({
+        where: { vendedor_id: id },
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getClienteById = getClienteById;
 const createCliente = (ClienteData) => __awaiter(void 0, void 0, void 0, function* () {

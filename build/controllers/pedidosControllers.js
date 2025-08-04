@@ -34,17 +34,28 @@ exports.subirEvidencia = [
             upsert: true,
         });
         if (error) {
-            return res.status(500).json({ error: 'Error al subir archivo a Supabase', details: error.message });
+            return res
+                .status(500)
+                .json({
+                error: 'Error al subir archivo a Supabase',
+                details: error.message,
+            });
         }
         // Construir URL pública
-        const { publicUrl } = supabase.storage.from('evidencias').getPublicUrl(fileName).data;
+        const { publicUrl } = supabase.storage
+            .from('evidencias')
+            .getPublicUrl(fileName).data;
         // Actualizar pedido con la URL
-        const actualizado = yield (0, pedidosServices_1.updatePedidosService)(id, { evidencia_url: publicUrl });
+        const actualizado = yield (0, pedidosServices_1.updatePedidosService)(id, {
+            evidencia_url: publicUrl,
+        });
         if (!actualizado) {
-            return res.status(500).json({ error: 'No se pudo actualizar el pedido con la evidencia' });
+            return res
+                .status(500)
+                .json({ error: 'No se pudo actualizar el pedido con la evidencia' });
         }
         res.json({ url: publicUrl });
-    })
+    }),
 ];
 const pedidosServices_1 = require("../services/pedidosServices");
 const ApiError_1 = require("../utils/ApiError");

@@ -17,10 +17,11 @@ export const createProducto = async (ProductoData: Partial<Producto>) => {
   return await ProductoRepository.save(newProducto);
 };
 
-export const updateProducto = async (id: string, ProductoData: Partial<Producto>) => {
+export const updateProducto = async (
+  id: string,
+  ProductoData: Partial<Producto>,
+) => {
   const ProductoRepository = AppDataSource.getRepository(Producto);
   await ProductoRepository.update(id, ProductoData);
   return await ProductoRepository.findOneBy({ id });
 };
-
-

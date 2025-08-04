@@ -3,13 +3,17 @@ import { Pedido } from '../entities/Pedidos';
 
 export const getPedidos = async () => {
   const PedidoRepository = AppDataSource.getRepository(Pedido);
-  return await PedidoRepository.find();
+  return await PedidoRepository.find({
+    order: { fecha_creacion: 'DESC' },
+  });
 };
 
 export const getPedidoById = async (id: string) => {
   const PedidoRepository = AppDataSource.getRepository(Pedido);
-  return await PedidoRepository.find({ where: { vendedor_id: id },
-  relations: ['productos_pedido'],
+  return await PedidoRepository.find({
+    where: { vendedor_id: id },
+    relations: ['productos_pedido'],
+    order: { fecha_creacion: 'DESC' },
   });
 };
 

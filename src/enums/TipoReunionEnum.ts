@@ -1,5 +1,5 @@
 export enum TipoReunionEnum {
-    PRESENCIAL='presencial',
-    VIRTUAL='virtual',
-    TELEFONICA='telefonica'
+  PRESENCIAL = 'presencial',
+  VIRTUAL = 'virtual',
+  TELEFONICA = 'telefonica',
 }

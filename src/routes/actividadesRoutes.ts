@@ -8,7 +8,6 @@ import {
 } from '../controllers/actividadesControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
 
-
 const router: Router = Router();
 
 router.get('/actividades', asyncHandler(getActividades));

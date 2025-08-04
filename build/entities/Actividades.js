@@ -40,7 +40,11 @@ __decorate([
     __metadata("design:type", Vendedores_1.Vendedor)
 ], Actividad.prototype, "vendedor", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: ActividadesEnum_1.ActividadesEnum, default: ActividadesEnum_1.ActividadesEnum.LLAMADA }),
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: ActividadesEnum_1.ActividadesEnum,
+        default: ActividadesEnum_1.ActividadesEnum.LLAMADA,
+    }),
     __metadata("design:type", String)
 ], Actividad.prototype, "tipo", void 0);
 __decorate([

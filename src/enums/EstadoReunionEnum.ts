@@ -1,5 +1,5 @@
 export enum EstadoReunionEnum {
-    PROGRAMADA='programada',
-    CANCELADA='cancelada',
-    COMPLETADA='completada'
+  PROGRAMADA = 'programada',
+  CANCELADA = 'cancelada',
+  COMPLETADA = 'completada',
 }

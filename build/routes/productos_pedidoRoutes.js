@@ -1,12 +1,37 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const productos_pedidoControllers_1 = require("../controllers/productos_pedidoControllers");
-const asyncHandler_1 = require("../middlewares/asyncHandler");
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+const express_1 = require('express');
+const productos_pedidoControllers_1 = require('../controllers/productos_pedidoControllers');
+const asyncHandler_1 = require('../middlewares/asyncHandler');
 const router = (0, express_1.Router)();
-router.get('/productos_pedido', (0, asyncHandler_1.asyncHandler)(productos_pedidoControllers_1.getProductosPedido));
-router.get('/productos_pedido/:id', (0, asyncHandler_1.asyncHandler)(productos_pedidoControllers_1.getProductoPedidoById));
-router.post('/productos_pedido', (0, asyncHandler_1.asyncHandler)(productos_pedidoControllers_1.createProductoPedido));
-router.put('/productos_pedido/:id', (0, asyncHandler_1.asyncHandler)(productos_pedidoControllers_1.updateProductoPedido));
-router.delete('/productos_pedido/:id', (0, asyncHandler_1.asyncHandler)(productos_pedidoControllers_1.deleteProductoPedido));
+router.get(
+  '/productos_pedido',
+  (0, asyncHandler_1.asyncHandler)(
+    productos_pedidoControllers_1.getProductosPedido,
+  ),
+);
+router.get(
+  '/productos_pedido/:id',
+  (0, asyncHandler_1.asyncHandler)(
+    productos_pedidoControllers_1.getProductoPedidoById,
+  ),
+);
+router.post(
+  '/productos_pedido',
+  (0, asyncHandler_1.asyncHandler)(
+    productos_pedidoControllers_1.createProductoPedido,
+  ),
+);
+router.put(
+  '/productos_pedido/:id',
+  (0, asyncHandler_1.asyncHandler)(
+    productos_pedidoControllers_1.updateProductoPedido,
+  ),
+);
+router.delete(
+  '/productos_pedido/:id',
+  (0, asyncHandler_1.asyncHandler)(
+    productos_pedidoControllers_1.deleteProductoPedido,
+  ),
+);
 exports.default = router;

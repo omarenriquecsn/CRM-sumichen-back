@@ -14,12 +14,17 @@ const dataBaseConfig_1 = require("../config/dataBaseConfig");
 const Actividades_1 = require("../entities/Actividades");
 const getActividads = () => __awaiter(void 0, void 0, void 0, function* () {
     const ActividadRepository = dataBaseConfig_1.AppDataSource.getRepository(Actividades_1.Actividad);
-    return yield ActividadRepository.find();
+    return yield ActividadRepository.find({
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getActividads = getActividads;
 const getActividadById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const ActividadRepository = dataBaseConfig_1.AppDataSource.getRepository(Actividades_1.Actividad);
-    return yield ActividadRepository.find({ where: { vendedor_id: id } });
+    return yield ActividadRepository.find({
+        where: { vendedor_id: id },
+        order: { fecha_creacion: 'DESC' },
+    });
 });
 exports.getActividadById = getActividadById;
 const createActividad = (ActividadData) => __awaiter(void 0, void 0, void 0, function* () {

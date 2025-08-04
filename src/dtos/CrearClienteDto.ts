@@ -1,5 +1,5 @@
-import { IsEmail, IsOptional, IsString, MaxLength } from "class-validator";
-import { Unique } from "typeorm";
+import { IsEmail, IsOptional, IsString, MaxLength } from 'class-validator';
+import { Unique } from 'typeorm';
 
 export class CreateClienteDto {
   @IsString()
@@ -13,7 +13,7 @@ export class CreateClienteDto {
   rif: string;
 
   @IsString()
-  empresa: string; 
+  empresa: string;
 
   @IsEmail()
   email?: string;
