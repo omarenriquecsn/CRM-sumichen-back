@@ -33,4 +33,7 @@ app.use(indexRoutes_1.default);
 // Configure Swagger UI
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.use(errorHandler_1.errorHandler);
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
 exports.default = app;
