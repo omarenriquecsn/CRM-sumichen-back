@@ -9,7 +9,10 @@ import {
 import { ApiError } from '../utils/ApiError';
 
 export const getUsuariosService = async () => {
-  const usuarios = await getUsuarios();
+  const usuariosDb = await getUsuarios();
+  const usuarios: Vendedor[] = usuariosDb.map((usuario) => {
+    return usuario;
+  });
   return usuarios;
 };
 
