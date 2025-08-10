@@ -14,9 +14,10 @@ const usuariosRepository_1 = require("../repositories/usuariosRepository");
 const ApiError_1 = require("../utils/ApiError");
 const getUsuariosService = () => __awaiter(void 0, void 0, void 0, function* () {
     const usuariosDb = yield (0, usuariosRepository_1.getUsuarios)();
-    const usuarios = usuariosDb.map((usuario) => {
-        return usuario;
-    });
+    const usuarios = usuariosDb.filter((u) => u.rol === 'vendedor');
+    if (usuarios.length === 0) {
+        return [];
+    }
     return usuarios;
 });
 exports.getUsuariosService = getUsuariosService;
