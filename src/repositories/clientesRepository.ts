@@ -9,6 +9,13 @@ export const getClientes = async () => {
   });
 };
 
+export const getClientesByIdAuxiliar = async (id: string) => {
+  const ClienteRepository = AppDataSource.getRepository(Cliente);
+  return await ClienteRepository.findOne({
+    where: { id },
+  });
+};
+
 export const getClienteById = async (id: string) => {
   const ClienteRepository = AppDataSource.getRepository(Cliente);
   return await ClienteRepository.find({

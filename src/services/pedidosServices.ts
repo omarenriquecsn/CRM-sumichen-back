@@ -15,6 +15,8 @@ import {
 
 import { sendWhatsappNotification } from '../utils/whatsapp';
 import dotenv from 'dotenv';
+import { getClientesById } from '../controllers/clientesControllers';
+import { getClientesByIdAuxiliar } from '../repositories/clientesRepository';
 dotenv.config();
 
 export const getPedidosService = async () => {
@@ -72,7 +74,9 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
 
   // Notificación WhatsApp al admin
   const adminNumber = process.env.ADMIN_WHATSAPP_NUMBER;
-  const mensaje = `Nuevo pedido creado: ID ${pedido.id}, Cliente: ${pedido.cliente_id}, Total: ${pedido.total}`;
+
+  const cliente = await getClientesByIdAuxiliar(pedido.cliente_id);
+  const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente?.empresa}, Total: ${pedido.total}`;
   if (adminNumber) {
     try {
       await sendWhatsappNotification(mensaje, adminNumber);

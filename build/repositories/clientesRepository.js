@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCliente = exports.updateCliente = exports.createCliente = exports.getClienteById = exports.getClientes = void 0;
+exports.deleteCliente = exports.updateCliente = exports.createCliente = exports.getClienteById = exports.getClientesByIdAuxiliar = exports.getClientes = void 0;
 const dataBaseConfig_1 = require("../config/dataBaseConfig");
 const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
 const Clientes_1 = require("../entities/Clientes");
@@ -20,6 +20,13 @@ const getClientes = () => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.getClientes = getClientes;
+const getClientesByIdAuxiliar = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
+    return yield ClienteRepository.findOne({
+        where: { id },
+    });
+});
+exports.getClientesByIdAuxiliar = getClientesByIdAuxiliar;
 const getClienteById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
     return yield ClienteRepository.find({
