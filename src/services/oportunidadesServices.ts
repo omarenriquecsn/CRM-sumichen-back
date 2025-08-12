@@ -19,7 +19,11 @@ export const createOportunidadesService = async (
   return nuevaOportunidad;
 };
 
-export const getOportunidadesByIdService = async (id: string) => {
+export const getOportunidadesByIdService = async (id: string, rol: string) => {
+  if (rol === 'admin') {
+    const oportunidades = await getOportunidads();
+    return oportunidades;
+  }
   const oportunidades = await getOportunidadById(id);
   return oportunidades;
 };

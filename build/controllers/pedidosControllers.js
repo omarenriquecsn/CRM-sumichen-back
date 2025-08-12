@@ -76,7 +76,8 @@ const getPedidoById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.getPedidoById = getPedidoById;
 const getPedidosByVendedor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const pedidos = yield (0, pedidosServices_1.getPedidosByVendedorService)(id);
+    const { rol } = req.user.user_metadata;
+    const pedidos = yield (0, pedidosServices_1.getPedidosByVendedorService)(id, rol);
     if (pedidos.length === 0)
         throw new ApiError_1.ApiError('No hay pedidos disponibles');
     res.json(pedidos);

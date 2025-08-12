@@ -14,7 +14,13 @@ export const getActividadesService = async () => {
   return actividades;
 };
 
-export const getActividadesByIdService = async (id: string) => {
+export const getActividadesByIdService = async (id: string, rol: string) => {
+
+  if (rol === 'admin') {
+    const actividades = await getActividads();
+    return actividades;
+  }
+
   const actividades = await getActividadById(id);
   if (actividades.length === 0)
     throw new Error('No hay actividades para mostrar');

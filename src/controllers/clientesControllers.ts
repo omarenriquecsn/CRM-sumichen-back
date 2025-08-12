@@ -16,7 +16,9 @@ export const getClientes = async (req: Request, res: Response) => {
 
 export const getClientesById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const cliente = await getClientesByIdService(id);
+  const { rol } = req.user.user_metadata;
+
+  const cliente = await getClientesByIdService(id, rol);
 
   if (!cliente) throw new ApiError('Cliente no encontrado', 404);
 
@@ -24,7 +26,8 @@ export const getClientesById = async (req: Request, res: Response) => {
 };
 
 export const createClientes = async (req: Request, res: Response) => {
-  const nuevoCliente = await createClientesService(req.body);
+  const { rol } = req.user.user_metadata;
+  const nuevoCliente = await createClientesService(req.body, rol);  
 
   if (!nuevoCliente) throw new ApiError('No se ha creado el cliente', 400);
 

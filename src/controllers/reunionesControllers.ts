@@ -37,7 +37,8 @@ export const createReunion = async (req: Request, res: Response) => {
 
 export const updateReunion = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const reunionActualizada = await updateReunionesService(id, req.body);
+  const { rol } = req.user.user_metadata;
+  const reunionActualizada = await updateReunionesService(id, req.body, rol);
   if (!reunionActualizada)
     throw new ApiError('No se pudo actualizar la reunión', 400);
   res.json(reunionActualizada);

@@ -52,6 +52,7 @@ export const createReunionesService = async (ReunionData: Partial<Reunion>) => {
 export const updateReunionesService = async (
   id: string,
   reunionData: Partial<Reunion>,
+  rol: string
 ) => {
   const reunionActualizada = await updateReunion(id, reunionData);
 
@@ -60,6 +61,7 @@ export const updateReunionesService = async (
   if (reunionActualizada.estado === 'completada') {
     const allActividades = await getActividadesByIdService(
       reunionActualizada.vendedor_id,
+      rol
     );
 
     const actividadActualizada = allActividades.find(

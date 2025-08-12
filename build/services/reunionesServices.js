@@ -45,12 +45,12 @@ const createReunionesService = (ReunionData) => __awaiter(void 0, void 0, void 0
     return neuvaReunion;
 });
 exports.createReunionesService = createReunionesService;
-const updateReunionesService = (id, reunionData) => __awaiter(void 0, void 0, void 0, function* () {
+const updateReunionesService = (id, reunionData, rol) => __awaiter(void 0, void 0, void 0, function* () {
     const reunionActualizada = yield (0, reunionesRepository_1.updateReunion)(id, reunionData);
     if (!reunionActualizada)
         throw new Error('No se pudo actualizar la reunion');
     if (reunionActualizada.estado === 'completada') {
-        const allActividades = yield (0, actividadesServices_1.getActividadesByIdService)(reunionActualizada.vendedor_id);
+        const allActividades = yield (0, actividadesServices_1.getActividadesByIdService)(reunionActualizada.vendedor_id, rol);
         const actividadActualizada = allActividades.find((actividad) => actividad.cliente_id === reunionActualizada.cliente_id &&
             actividad.titulo === reunionActualizada.titulo &&
             actividad.descripcion === reunionActualizada.descripcion &&

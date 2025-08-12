@@ -74,7 +74,8 @@ export const getPedidoById = async (req: Request, res: Response) => {
 
 export const getPedidosByVendedor = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const pedidos = await getPedidosByVendedorService(id);
+  const { rol } = req.user.user_metadata;
+  const pedidos = await getPedidosByVendedorService(id, rol);
   if (pedidos.length === 0) throw new ApiError('No hay pedidos disponibles');
   res.json(pedidos);
 };

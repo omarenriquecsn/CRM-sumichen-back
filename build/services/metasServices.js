@@ -18,7 +18,11 @@ const getMetasService = () => __awaiter(void 0, void 0, void 0, function* () {
     return metas;
 });
 exports.getMetasService = getMetasService;
-const getMetasByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getMetasByIdService = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    if (rol === 'admin') {
+        const metas = yield (0, metasRepository_1.getMetas)();
+        return metas;
+    }
     const meta = yield (0, metasRepository_1.getMetaById)(id);
     return meta;
 });
@@ -35,8 +39,8 @@ const createMetasService = (metaData) => __awaiter(void 0, void 0, void 0, funct
     return nuevaMeta;
 });
 exports.createMetasService = createMetasService;
-const updateMetasClientesService = (id, accion, valor, mes) => __awaiter(void 0, void 0, void 0, function* () {
-    const metas = yield (0, exports.getMetasByIdService)(id);
+const updateMetasClientesService = (id, accion, valor, mes, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    const metas = yield (0, exports.getMetasByIdService)(id, rol);
     metas.map((meta) => __awaiter(void 0, void 0, void 0, function* () {
         if (meta.mes === mes) {
             meta[accion] = valor;

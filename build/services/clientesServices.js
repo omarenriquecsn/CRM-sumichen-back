@@ -22,15 +22,19 @@ const getClientesVendedorService = (id) => __awaiter(void 0, void 0, void 0, fun
     return clientes.filter((cliente) => cliente.vendedor_id === id);
 });
 exports.getClientesVendedorService = getClientesVendedorService;
-const getClientesByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getClientesByIdService = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    if (rol === 'admin') {
+        const clientes = yield (0, clientesRepository_1.getClientes)();
+        return clientes;
+    }
     const cliente = yield (0, clientesRepository_1.getClienteById)(id);
     return cliente;
 });
 exports.getClientesByIdService = getClientesByIdService;
-const createClientesService = (clienteData) => __awaiter(void 0, void 0, void 0, function* () {
+const createClientesService = (clienteData, rol) => __awaiter(void 0, void 0, void 0, function* () {
     const nuevoCliente = yield (0, clientesRepository_1.createCliente)(clienteData);
     const mesActual = new Date().getMonth() + 1;
-    (0, metasServices_1.updateMetasClientesService)(nuevoCliente.vendedor_id, 'clientes_actuales', 1, mesActual);
+    (0, metasServices_1.updateMetasClientesService)(nuevoCliente.vendedor_id, 'clientes_actuales', 1, mesActual, rol);
     return nuevoCliente;
 });
 exports.createClientesService = createClientesService;

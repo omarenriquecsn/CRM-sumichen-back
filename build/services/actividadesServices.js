@@ -18,7 +18,11 @@ const getActividadesService = () => __awaiter(void 0, void 0, void 0, function* 
     return actividades;
 });
 exports.getActividadesService = getActividadesService;
-const getActividadesByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getActividadesByIdService = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    if (rol === 'admin') {
+        const actividades = yield (0, actividadesRepository_1.getActividads)();
+        return actividades;
+    }
     const actividades = yield (0, actividadesRepository_1.getActividadById)(id);
     if (actividades.length === 0)
         throw new Error('No hay actividades para mostrar');

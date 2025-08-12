@@ -22,7 +22,11 @@ export const getTicketsService = async () => {
   return tickets;
 };
 
-export const getTicketsByVendedorService = async (id: string) => {
+export const getTicketsByVendedorService = async (id: string, rol: string) => {
+  if (rol === 'admin') {
+    const tickets = await getTickets();
+    return tickets;
+  }
   const tickets = await getTickets();
   return tickets.filter((ticket) => ticket.vendedor_id === id);
 };
@@ -63,6 +67,7 @@ export const createTicketsService = async (ticketData: Partial<Ticket>) => {
 export const updateTicketsService = async (
   id: string,
   ticketData: Partial<Ticket>,
+  rol: string
 ) => {
   const ticketActualizado = await updateTicket(id, ticketData);
 
@@ -74,6 +79,7 @@ export const updateTicketsService = async (
   ) {
     const actividades = await getActividadesByIdService(
       ticketActualizado.vendedor_id,
+      rol
     );
 
     const actividadActualizada = actividades.find(

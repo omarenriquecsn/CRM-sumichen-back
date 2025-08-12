@@ -29,7 +29,8 @@ const getTicketById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.getTicketById = getTicketById;
 const getTicketsByVendedor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const tickets = yield (0, ticketsServices_1.getTicketsByVendedorService)(id);
+    const { rol } = req.user.user_metadata;
+    const tickets = yield (0, ticketsServices_1.getTicketsByVendedorService)(id, rol);
     if (tickets.length === 0)
         throw new ApiError_1.ApiError('No hay tickets disponibles');
     res.json(tickets);
@@ -45,7 +46,8 @@ const createTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.createTicket = createTicket;
 const updateTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const actualizado = yield (0, ticketsServices_1.updateTicketsService)(id, req.body);
+    const { rol } = req.user.user_metadata;
+    const actualizado = yield (0, ticketsServices_1.updateTicketsService)(id, req.body, rol);
     if (!actualizado)
         throw new ApiError_1.ApiError('No se pudo actualizar el ticket', 400);
     res.json(actualizado);

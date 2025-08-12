@@ -14,7 +14,12 @@ export const getMetasService = async () => {
   return metas;
 };
 
-export const getMetasByIdService = async (id: string) => {
+export const getMetasByIdService = async (id: string, rol: string) => {
+  if (rol === 'admin') {
+    const metas = await getMetas();
+    return metas;
+  }
+
   const meta = await getMetaById(id);
   return meta;
 };
@@ -52,8 +57,9 @@ export const updateMetasClientesService = async (
   accion: 'ventas_actuales' | 'clientes_actuales',
   valor: number,
   mes: number,
+  rol: string
 ) => {
-  const metas = await getMetasByIdService(id);
+  const metas = await getMetasByIdService(id, rol);
 
   metas.map(async (meta) => {
     if (meta.mes === mes) {

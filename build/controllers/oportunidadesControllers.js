@@ -21,7 +21,8 @@ const getOportunidades = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.getOportunidades = getOportunidades;
 const getOportunidadById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const oportunidad = yield (0, oportunidadesServices_1.getOportunidadesByIdService)(id);
+    const { rol } = req.user.user_metadata;
+    const oportunidad = yield (0, oportunidadesServices_1.getOportunidadesByIdService)(id, rol);
     if (!oportunidad)
         throw new ApiError_1.ApiError('Oportunidad no encontrada', 404);
     res.json(oportunidad);

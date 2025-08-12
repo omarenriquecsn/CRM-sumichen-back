@@ -8,13 +8,25 @@ import {
   deletePedido,
 } from '../repositories/pedidosRepository';
 import { createProductosPedido } from '../repositories/producto_pedidoRepository';
+import {
+  getProductosPedidosByVendedorService,
+  deleteProductos_pedidoService,
+} from './productos_pedidoServices';
+
+import { sendWhatsappNotification } from '../utils/whatsapp';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const getPedidosService = async () => {
   const pedidos = await getPedidos();
   return pedidos;
 };
 
-export const getPedidosByVendedorService = async (id: string) => {
+export const getPedidosByVendedorService = async (id: string, rol?: string) => {
+  if (rol === 'admin') {
+    const pedidos = await getPedidos();
+    return pedidos;
+  }
   const pedidos = await getPedidos();
   return pedidos.filter((pedido) => pedido.vendedor_id === id);
 };
@@ -58,6 +70,17 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
     }),
   );
 
+  // Notificación WhatsApp al admin
+  const adminNumber = process.env.ADMIN_WHATSAPP_NUMBER;
+  const mensaje = `Nuevo pedido creado: ID ${pedido.id}, Cliente: ${pedido.cliente_id}, Total: ${pedido.total}`;
+  if (adminNumber) {
+    try {
+      await sendWhatsappNotification(mensaje, adminNumber);
+    } catch (error) {
+      console.error('No se pudo enviar WhatsApp al admin:', error);
+    }
+  }
+
   return pedido;
 };
 
@@ -70,6 +93,12 @@ export const updatePedidosService = async (
 };
 
 export const deletePedidosService = async (id: string) => {
+  const productPedido = await getProductosPedidosByVendedorService(id);
+  await Promise.all(
+    productPedido.map(async (producto) => {
+      await deleteProductos_pedidoService(producto.id);
+    }),
+  );
   const pedidoBorrado = await deletePedido(id);
   return pedidoBorrado;
 };

@@ -21,7 +21,8 @@ const getMetas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getMetas = getMetas;
 const getMetasById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const meta = yield (0, metasServices_1.getMetasByIdService)(id);
+    const { rol } = req.user.user_metadata;
+    const meta = yield (0, metasServices_1.getMetasByIdService)(id, rol);
     if (!meta)
         throw new ApiError_1.ApiError('Meta no encontrada', 404);
     res.json(meta);
@@ -36,6 +37,7 @@ const createMetas = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.createMetas = createMetas;
 const updateMetas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    const { rol } = req.user.user_metadata;
     const metaActualizada = yield (0, metasServices_1.updateMetasService)(id, req.body);
     if (!metaActualizada)
         throw new ApiError_1.ApiError('No se actualizó la meta', 400);

@@ -21,7 +21,11 @@ const createOportunidadesService = (oportunidadData) => __awaiter(void 0, void 0
     return nuevaOportunidad;
 });
 exports.createOportunidadesService = createOportunidadesService;
-const getOportunidadesByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getOportunidadesByIdService = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    if (rol === 'admin') {
+        const oportunidades = yield (0, oportunidadesRepository_1.getOportunidads)();
+        return oportunidades;
+    }
     const oportunidades = yield (0, oportunidadesRepository_1.getOportunidadById)(id);
     return oportunidades;
 });

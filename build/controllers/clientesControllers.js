@@ -21,14 +21,16 @@ const getClientes = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getClientes = getClientes;
 const getClientesById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const cliente = yield (0, clientesServices_1.getClientesByIdService)(id);
+    const { rol } = req.user.user_metadata;
+    const cliente = yield (0, clientesServices_1.getClientesByIdService)(id, rol);
     if (!cliente)
         throw new ApiError_1.ApiError('Cliente no encontrado', 404);
     res.json(cliente);
 });
 exports.getClientesById = getClientesById;
 const createClientes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const nuevoCliente = yield (0, clientesServices_1.createClientesService)(req.body);
+    const { rol } = req.user.user_metadata;
+    const nuevoCliente = yield (0, clientesServices_1.createClientesService)(req.body, rol);
     if (!nuevoCliente)
         throw new ApiError_1.ApiError('No se ha creado el cliente', 400);
     res.status(201).json(nuevoCliente);

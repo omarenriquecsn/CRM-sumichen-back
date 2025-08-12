@@ -19,16 +19,27 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePedidosService = exports.updatePedidosService = exports.createPedidosService = exports.getPedidosByIdService = exports.getPedidosByVendedorService = exports.getPedidosService = void 0;
 const pedidosRepository_1 = require("../repositories/pedidosRepository");
 const producto_pedidoRepository_1 = require("../repositories/producto_pedidoRepository");
+const productos_pedidoServices_1 = require("./productos_pedidoServices");
+const whatsapp_1 = require("../utils/whatsapp");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const getPedidosService = () => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosRepository_1.getPedidos)();
     return pedidos;
 });
 exports.getPedidosService = getPedidosService;
-const getPedidosByVendedorService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getPedidosByVendedorService = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    if (rol === 'admin') {
+        const pedidos = yield (0, pedidosRepository_1.getPedidos)();
+        return pedidos;
+    }
     const pedidos = yield (0, pedidosRepository_1.getPedidos)();
     return pedidos.filter((pedido) => pedido.vendedor_id === id);
 });
@@ -52,6 +63,17 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
     yield Promise.all(productosPedido.map((producto) => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, producto_pedidoRepository_1.createProductosPedido)(producto);
     })));
+    // Notificación WhatsApp al admin
+    const adminNumber = process.env.ADMIN_WHATSAPP_NUMBER;
+    const mensaje = `Nuevo pedido creado: ID ${pedido.id}, Cliente: ${pedido.cliente_id}, Total: ${pedido.total}`;
+    if (adminNumber) {
+        try {
+            yield (0, whatsapp_1.sendWhatsappNotification)(mensaje, adminNumber);
+        }
+        catch (error) {
+            console.error('No se pudo enviar WhatsApp al admin:', error);
+        }
+    }
     return pedido;
 });
 exports.createPedidosService = createPedidosService;
@@ -61,6 +83,10 @@ const updatePedidosService = (id, pedidoData) => __awaiter(void 0, void 0, void 
 });
 exports.updatePedidosService = updatePedidosService;
 const deletePedidosService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const productPedido = yield (0, productos_pedidoServices_1.getProductosPedidosByVendedorService)(id);
+    yield Promise.all(productPedido.map((producto) => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, productos_pedidoServices_1.deleteProductos_pedidoService)(producto.id);
+    })));
     const pedidoBorrado = yield (0, pedidosRepository_1.deletePedido)(id);
     return pedidoBorrado;
 });

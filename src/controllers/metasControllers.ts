@@ -16,7 +16,8 @@ export const getMetas = async (req: Request, res: Response) => {
 
 export const getMetasById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const meta = await getMetasByIdService(id);
+  const { rol } = req.user.user_metadata;
+  const meta = await getMetasByIdService(id, rol);
 
   if (!meta) throw new ApiError('Meta no encontrada', 404);
 
@@ -33,6 +34,7 @@ export const createMetas = async (req: Request, res: Response) => {
 
 export const updateMetas = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { rol } = req.user.user_metadata;
   const metaActualizada = await updateMetasService(id, req.body);
 
   if (!metaActualizada) throw new ApiError('No se actualizó la meta', 400);

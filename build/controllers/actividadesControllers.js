@@ -21,7 +21,8 @@ const getActividades = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.getActividades = getActividades;
 const getActividadesById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const actividad = yield (0, actividadesServices_1.getActividadesByIdService)(id);
+    const { rol } = req.user.user_metadata;
+    const actividad = yield (0, actividadesServices_1.getActividadesByIdService)(id, rol);
     if (!actividad)
         throw new ApiError_1.ApiError('Actividad no encontrada', 404);
     res.json(actividad);

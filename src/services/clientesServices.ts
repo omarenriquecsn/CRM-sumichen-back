@@ -18,12 +18,16 @@ export const getClientesVendedorService = async (id: string) => {
   return clientes.filter((cliente) => cliente.vendedor_id === id);
 };
 
-export const getClientesByIdService = async (id: string) => {
+export const getClientesByIdService = async (id: string, rol: string) => {
+  if (rol === 'admin') {
+    const clientes = await getClientes();
+  return clientes
+  }
   const cliente = await getClienteById(id);
   return cliente;
 };
 
-export const createClientesService = async (clienteData: Partial<Cliente>) => {
+export const createClientesService = async (clienteData: Partial<Cliente>, rol: string) => {
   const nuevoCliente = await createCliente(clienteData);
   const mesActual = new Date().getMonth() + 1;
   updateMetasClientesService(
@@ -31,6 +35,7 @@ export const createClientesService = async (clienteData: Partial<Cliente>) => {
     'clientes_actuales',
     1,
     mesActual,
+    rol
   );
   return nuevoCliente;
 };

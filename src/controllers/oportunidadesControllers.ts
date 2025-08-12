@@ -17,7 +17,8 @@ export const getOportunidades = async (req: Request, res: Response) => {
 
 export const getOportunidadById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const oportunidad = await getOportunidadesByIdService(id);
+  const { rol } = req.user.user_metadata;
+  const oportunidad = await getOportunidadesByIdService(id, rol);
   if (!oportunidad) throw new ApiError('Oportunidad no encontrada', 404);
   res.json(oportunidad);
 };

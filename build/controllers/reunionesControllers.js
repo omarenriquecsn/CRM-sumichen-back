@@ -41,7 +41,8 @@ const createReunion = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createReunion = createReunion;
 const updateReunion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const reunionActualizada = yield (0, reunionesServices_1.updateReunionesService)(id, req.body);
+    const { rol } = req.user.user_metadata;
+    const reunionActualizada = yield (0, reunionesServices_1.updateReunionesService)(id, req.body, rol);
     if (!reunionActualizada)
         throw new ApiError_1.ApiError('No se pudo actualizar la reunión', 400);
     res.json(reunionActualizada);

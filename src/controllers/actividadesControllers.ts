@@ -18,7 +18,8 @@ export const getActividades = async (req: Request, res: Response) => {
 
 export const getActividadesById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const actividad = await getActividadesByIdService(id);
+  const { rol } = req.user.user_metadata;
+  const actividad = await getActividadesByIdService(id, rol);
 
   if (!actividad) throw new ApiError('Actividad no encontrada', 404);
 
