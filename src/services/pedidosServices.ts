@@ -17,6 +17,7 @@ import { sendWhatsappNotification } from '../utils/whatsapp';
 import dotenv from 'dotenv';
 import { getClientesById } from '../controllers/clientesControllers';
 import { getClientesByIdAuxiliar } from '../repositories/clientesRepository';
+import sendWhatsAppMessage from '../utils/sendWhatsapp';
 dotenv.config();
 
 export const getPedidosService = async () => {
@@ -84,6 +85,8 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
       console.error('No se pudo enviar WhatsApp al admin:', error);
     }
   }
+
+  await sendWhatsAppMessage()
 
   return pedido;
 };

@@ -30,6 +30,7 @@ const productos_pedidoServices_1 = require("./productos_pedidoServices");
 const whatsapp_1 = require("../utils/whatsapp");
 const dotenv_1 = __importDefault(require("dotenv"));
 const clientesRepository_1 = require("../repositories/clientesRepository");
+const sendWhatsapp_1 = __importDefault(require("../utils/sendWhatsapp"));
 dotenv_1.default.config();
 const getPedidosService = () => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosRepository_1.getPedidos)();
@@ -76,6 +77,7 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
             console.error('No se pudo enviar WhatsApp al admin:', error);
         }
     }
+    yield (0, sendWhatsapp_1.default)();
     return pedido;
 });
 exports.createPedidosService = createPedidosService;
