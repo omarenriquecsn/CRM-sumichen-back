@@ -7,17 +7,18 @@ import {
   getTicketsByVendedor,
 } from '../controllers/ticketsControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
+import verificarToken from '../middlewares/jwtHandler';
 
 const router: Router = Router();
 
-router.get('/tickets', asyncHandler(getTickets));
+router.get('/tickets', verificarToken, asyncHandler(getTickets));
 
-router.get('/tickets/:id', asyncHandler(getTicketsByVendedor));
+router.get('/tickets/:id', verificarToken, asyncHandler(getTicketsByVendedor));
 
-router.post('/tickets', asyncHandler(createTicket));
+router.post('/tickets', verificarToken, asyncHandler(createTicket));
 
-router.put('/tickets/:id', asyncHandler(updateTicket));
+router.put('/tickets/:id', verificarToken, asyncHandler(updateTicket));
 
-router.delete('/tickets/:id', asyncHandler(deleteTicket));
+router.delete('/tickets/:id', verificarToken, asyncHandler(deleteTicket));
 
 export default router;

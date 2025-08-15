@@ -8,17 +8,18 @@ import {
   deleteReunion,
 } from '../controllers/reunionesControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
+import verificarToken from '../middlewares/jwtHandler';
 
 const router: Router = Router();
 
-router.get('/reuniones', asyncHandler(getReuniones));
+router.get('/reuniones', verificarToken, asyncHandler(getReuniones));
 
-router.get('/reuniones/:id', asyncHandler(getReunionById));
+router.get('/reuniones/:id', verificarToken, asyncHandler(getReunionById));
 
-router.post('/reuniones', asyncHandler(createReunion));
+router.post('/reuniones', verificarToken, asyncHandler(createReunion));
 
-router.put('/reuniones/:id', asyncHandler(updateReunion));
+router.put('/reuniones/:id', verificarToken, asyncHandler(updateReunion));
 
-router.delete('/reuniones/:id', asyncHandler(deleteReunion));
+router.delete('/reuniones/:id', verificarToken, asyncHandler(deleteReunion));
 
 export default router;

@@ -26,6 +26,7 @@ const getTicketsByVendedorService = (id, rol) => __awaiter(void 0, void 0, void 
         return tickets;
     }
     const tickets = yield (0, ticketsRepository_1.getTickets)();
+    console.log(tickets);
     return tickets.filter((ticket) => ticket.vendedor_id === id);
 });
 exports.getTicketsByVendedorService = getTicketsByVendedorService;

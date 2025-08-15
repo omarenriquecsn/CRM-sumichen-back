@@ -7,17 +7,18 @@ import {
   deleteActividades,
 } from '../controllers/actividadesControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
+import verificarToken from '../middlewares/jwtHandler';
 
 const router: Router = Router();
 
-router.get('/actividades', asyncHandler(getActividades));
+router.get('/actividades',verificarToken, asyncHandler(getActividades));
 
-router.get('/actividades/:id', asyncHandler(getActividadesById));
+router.get('/actividades/:id',verificarToken, asyncHandler(getActividadesById));
 
-router.post('/actividades', asyncHandler(createActividades));
+router.post('/actividades',verificarToken, asyncHandler(createActividades));
 
-router.put('/actividades/:id', asyncHandler(updateActividades));
+router.put('/actividades/:id',verificarToken, asyncHandler(updateActividades));
 
-router.delete('/actividades/:id', asyncHandler(deleteActividades));
+router.delete('/actividades/:id',verificarToken, asyncHandler(deleteActividades));
 
 export default router;

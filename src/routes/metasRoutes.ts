@@ -7,17 +7,18 @@ import {
   deleteMetas,
 } from '../controllers/metasControllers';
 import { asyncHandler } from '../middlewares/asyncHandler';
+import verificarToken from '../middlewares/jwtHandler';
 
 const router: Router = Router();
 
-router.get('/metas', asyncHandler(getMetas));
+router.get('/metas', verificarToken, asyncHandler(getMetas));
 
-router.get('/metas/:id', asyncHandler(getMetasById));
+router.get('/metas/:id', verificarToken, asyncHandler(getMetasById));
 
-router.post('/metas', asyncHandler(createMetas));
+router.post('/metas', verificarToken, asyncHandler(createMetas));
 
-router.put('/metas/:id', asyncHandler(updateMetas));
+router.put('/metas/:id', verificarToken, asyncHandler(updateMetas));
 
-router.delete('/metas/:id', asyncHandler(deleteMetas));
+router.delete('/metas/:id', verificarToken, asyncHandler(deleteMetas));
 
 export default router;

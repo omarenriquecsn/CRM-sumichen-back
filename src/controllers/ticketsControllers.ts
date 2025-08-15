@@ -25,13 +25,14 @@ export const getTicketById = async (req: Request, res: Response) => {
 export const getTicketsByVendedor = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { rol } = req.user.user_metadata;
+  console.log(rol)
   const tickets = await getTicketsByVendedorService(id, rol);
   if (tickets.length === 0) throw new ApiError('No hay tickets disponibles');
   res.json(tickets);
 };
 
 export const createTicket = async (req: Request, res: Response) => {
-  console.log(req.body);
+ 
   const nuevoTicket = await createTicketsService(req.body);
   if (!nuevoTicket) throw new ApiError('No se pudo crear el ticket', 400);
   res.status(201).json(nuevoTicket);
@@ -40,6 +41,7 @@ export const createTicket = async (req: Request, res: Response) => {
 export const updateTicket = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { rol } = req.user.user_metadata;
+  console.log(rol, 'update');
   const actualizado = await updateTicketsService(id, req.body, rol);
   if (!actualizado) throw new ApiError('No se pudo actualizar el ticket', 400);
   res.json(actualizado);
