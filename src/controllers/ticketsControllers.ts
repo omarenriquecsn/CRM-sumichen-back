@@ -32,7 +32,7 @@ export const getTicketsByVendedor = async (req: Request, res: Response) => {
 };
 
 export const createTicket = async (req: Request, res: Response) => {
- 
+ console.log(req)
   const nuevoTicket = await createTicketsService(req.body);
   if (!nuevoTicket) throw new ApiError('No se pudo crear el ticket', 400);
   res.status(201).json(nuevoTicket);

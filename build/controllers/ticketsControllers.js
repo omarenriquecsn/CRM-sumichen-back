@@ -38,6 +38,7 @@ const getTicketsByVendedor = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getTicketsByVendedor = getTicketsByVendedor;
 const createTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req);
     const nuevoTicket = yield (0, ticketsServices_1.createTicketsService)(req.body);
     if (!nuevoTicket)
         throw new ApiError_1.ApiError('No se pudo crear el ticket', 400);
