@@ -75,6 +75,10 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)({ type: 'timestamptz' }),
     __metadata("design:type", Date)
 ], Actividad.prototype, "fecha_actualizacion", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Actividad.prototype, "id_tipo_actividad", void 0);
 exports.Actividad = Actividad = __decorate([
     (0, typeorm_1.Entity)('actividades')
 ], Actividad);

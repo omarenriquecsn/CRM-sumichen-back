@@ -10,6 +10,7 @@ import {
 import { Cliente } from './Clientes';
 import { Vendedor } from './Vendedores';
 import { ActividadesEnum } from '../enums/ActividadesEnum';
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Entity('actividades')
 export class Actividad {
@@ -57,4 +58,7 @@ export class Actividad {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   fecha_actualizacion: Date;
+
+  @Column()
+  id_tipo_actividad: string;
 }

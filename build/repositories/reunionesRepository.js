@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteReunion = exports.updateReunion = exports.createReunion = exports.getReunionById = exports.getReunions = void 0;
 const dataBaseConfig_1 = require("../config/dataBaseConfig");
-const EstadoReunionEnum_1 = require("../enums/EstadoReunionEnum");
 const Reuniones_1 = require("../entities/Reuniones");
 const getReunions = () => __awaiter(void 0, void 0, void 0, function* () {
     const ReunionRepository = dataBaseConfig_1.AppDataSource.getRepository(Reuniones_1.Reunion);
@@ -43,8 +42,6 @@ const updateReunion = (id, ReunionData) => __awaiter(void 0, void 0, void 0, fun
 exports.updateReunion = updateReunion;
 const deleteReunion = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const ReunionRepository = dataBaseConfig_1.AppDataSource.getRepository(Reuniones_1.Reunion);
-    return yield ReunionRepository.update(id, {
-        estado: EstadoReunionEnum_1.EstadoReunionEnum.CANCELADA,
-    });
+    return yield ReunionRepository.delete(id);
 });
 exports.deleteReunion = deleteReunion;

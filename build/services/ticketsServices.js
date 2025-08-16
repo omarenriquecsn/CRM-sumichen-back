@@ -44,6 +44,8 @@ const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, f
         throw new ApiError_1.ApiError('El vendedor no existe');
     ticketData.numero = yield (0, ticketsRepository_1.generarNumero)();
     const newTicket = yield (0, ticketsRepository_1.createTicket)(ticketData);
+    if (!newTicket)
+        throw new ApiError_1.ApiError('No se pudo crear el ticket');
     const newActividad = {
         titulo: newTicket.titulo,
         tipo: ActividadesEnum_1.ActividadesEnum.TAREA,
@@ -51,6 +53,7 @@ const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, f
         fecha: new Date(),
         vendedor_id: newTicket.vendedor_id,
         cliente_id: newTicket.cliente_id,
+        id_tipo_actividad: newTicket.id
     };
     yield (0, actividadesServices_1.createActividadesService)(newActividad);
     return {

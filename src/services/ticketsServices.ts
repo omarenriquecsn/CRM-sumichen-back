@@ -48,6 +48,8 @@ export const createTicketsService = async (ticketData: Partial<Ticket>) => {
   ticketData.numero = await generarNumero();
 
   const newTicket = await createTicket(ticketData);
+  
+  if (!newTicket) throw new ApiError('No se pudo crear el ticket');
 
   const newActividad: Partial<Actividad> = {
     titulo: newTicket.titulo,
@@ -56,6 +58,7 @@ export const createTicketsService = async (ticketData: Partial<Ticket>) => {
     fecha: new Date(),
     vendedor_id: newTicket.vendedor_id,
     cliente_id: newTicket.cliente_id,
+    id_tipo_actividad: newTicket.id
   };
   await createActividadesService(newActividad);
 

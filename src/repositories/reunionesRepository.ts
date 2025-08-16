@@ -35,7 +35,5 @@ export const updateReunion = async (
 
 export const deleteReunion = async (id: string) => {
   const ReunionRepository = AppDataSource.getRepository(Reunion);
-  return await ReunionRepository.update(id, {
-    estado: EstadoReunionEnum.CANCELADA,
-  });
+  return await ReunionRepository.delete(id);
 };

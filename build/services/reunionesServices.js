@@ -31,7 +31,7 @@ exports.getReunionesByIdService = getReunionesByIdService;
 const createReunionesService = (ReunionData) => __awaiter(void 0, void 0, void 0, function* () {
     const neuvaReunion = yield (0, reunionesRepository_1.createReunion)(ReunionData);
     if (neuvaReunion === null)
-        throw new Error('No se pudo actualizar la reunion');
+        throw new Error('No se pudo crear la reunion');
     const newActividad = {
         titulo: neuvaReunion.titulo,
         descripcion: neuvaReunion.descripcion,
@@ -40,6 +40,7 @@ const createReunionesService = (ReunionData) => __awaiter(void 0, void 0, void 0
         fecha: neuvaReunion.fecha_inicio,
         tipo: ActividadesEnum_1.ActividadesEnum.REUNION,
         fecha_vencimiento: neuvaReunion.fecha_fin,
+        id_tipo_actividad: neuvaReunion.id,
     };
     yield (0, actividadesServices_1.createActividadesService)(newActividad);
     return neuvaReunion;

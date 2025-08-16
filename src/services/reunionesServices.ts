@@ -33,7 +33,7 @@ export const createReunionesService = async (ReunionData: Partial<Reunion>) => {
   const neuvaReunion = await createReunion(ReunionData);
 
   if (neuvaReunion === null)
-    throw new Error('No se pudo actualizar la reunion');
+    throw new Error('No se pudo crear la reunion');
 
   const newActividad: Partial<Actividad> = {
     titulo: neuvaReunion.titulo,
@@ -43,6 +43,7 @@ export const createReunionesService = async (ReunionData: Partial<Reunion>) => {
     fecha: neuvaReunion.fecha_inicio,
     tipo: ActividadesEnum.REUNION,
     fecha_vencimiento: neuvaReunion.fecha_fin,
+    id_tipo_actividad: neuvaReunion.id,
   };
 
   await createActividadesService(newActividad);
