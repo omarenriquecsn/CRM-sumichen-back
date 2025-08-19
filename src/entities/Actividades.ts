@@ -59,6 +59,6 @@ export class Actividad {
   @UpdateDateColumn({ type: 'timestamptz' })
   fecha_actualizacion: Date;
 
-  @Column()
+  @Column({ nullable: true })
   id_tipo_actividad: string;
 }

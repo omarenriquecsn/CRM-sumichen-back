@@ -76,7 +76,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Actividad.prototype, "fecha_actualizacion", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Actividad.prototype, "id_tipo_actividad", void 0);
 exports.Actividad = Actividad = __decorate([
