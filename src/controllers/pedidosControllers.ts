@@ -8,28 +8,32 @@ const supabase = createClient(
 const upload = multer();
 
 export const subirEvidencia = [
-  upload.single('file'),
+  upload.array('files'),
+
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    if (!req.file) {
+    if (!req.files?.length) {
       return res.status(400).json({ error: 'No se envió ningún archivo' });
     }
     // Subir archivo a Supabase Storage
-    const fileExt = req.file.originalname.split('.').pop();
-    const fileName = `pedido_${id}_${Date.now()}.${fileExt}`;
+    // const fileExt = req.file.originalname.split('.').pop();
+    const buffersPDF = await Promise.all(
+      (req.files as Express.Multer.File[]).map(convertirArchivo),
+    );
+    const pdfFinal = await unirPDFS(buffersPDF);
+    const fileName = `pedido_${id}_${Date.now()}.pdf`;
+
     const { data, error } = await supabase.storage
       .from('evidencias')
-      .upload(fileName, req.file.buffer, {
-        contentType: req.file.mimetype,
+      .upload(fileName, pdfFinal, {
+        contentType: 'application/pdf',
         upsert: true,
       });
     if (error) {
-      return res
-        .status(500)
-        .json({
-          error: 'Error al subir archivo a Supabase',
-          details: error.message,
-        });
+      return res.status(500).json({
+        error: 'Error al subir archivo a Supabase',
+        details: error.message,
+      });
     }
     // Construir URL pública
     const { publicUrl } = supabase.storage
@@ -58,6 +62,8 @@ import {
   getPedidosByVendedorService,
 } from '../services/pedidosServices';
 import { ApiError } from '../utils/ApiError';
+import convertirArchivo from '../utils/ConvertirArchivo';
+import unirPDFS from '../utils/UnirArchivos';
 
 export const getPedidos = async (req: Request, res: Response) => {
   const pedidos = await getPedidosService();

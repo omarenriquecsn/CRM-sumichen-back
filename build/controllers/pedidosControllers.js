@@ -18,25 +18,26 @@ const multer_1 = __importDefault(require("multer"));
 const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const upload = (0, multer_1.default)();
 exports.subirEvidencia = [
-    upload.single('file'),
+    upload.array('files'),
     (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a;
         const { id } = req.params;
-        if (!req.file) {
+        if (!((_a = req.files) === null || _a === void 0 ? void 0 : _a.length)) {
             return res.status(400).json({ error: 'No se envió ningún archivo' });
         }
         // Subir archivo a Supabase Storage
-        const fileExt = req.file.originalname.split('.').pop();
-        const fileName = `pedido_${id}_${Date.now()}.${fileExt}`;
+        // const fileExt = req.file.originalname.split('.').pop();
+        const buffersPDF = yield Promise.all(req.files.map(ConvertirArchivo_1.default));
+        const pdfFinal = yield (0, UnirArchivos_1.default)(buffersPDF);
+        const fileName = `pedido_${id}_${Date.now()}.pdf`;
         const { data, error } = yield supabase.storage
             .from('evidencias')
-            .upload(fileName, req.file.buffer, {
-            contentType: req.file.mimetype,
+            .upload(fileName, pdfFinal, {
+            contentType: 'application/pdf',
             upsert: true,
         });
         if (error) {
-            return res
-                .status(500)
-                .json({
+            return res.status(500).json({
                 error: 'Error al subir archivo a Supabase',
                 details: error.message,
             });
@@ -59,6 +60,8 @@ exports.subirEvidencia = [
 ];
 const pedidosServices_1 = require("../services/pedidosServices");
 const ApiError_1 = require("../utils/ApiError");
+const ConvertirArchivo_1 = __importDefault(require("../utils/ConvertirArchivo"));
+const UnirArchivos_1 = __importDefault(require("../utils/UnirArchivos"));
 const getPedidos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosServices_1.getPedidosService)();
     if (!pedidos)
