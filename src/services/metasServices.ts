@@ -14,7 +14,7 @@ export const getMetasService = async () => {
   return metas;
 };
 
-export const getMetasByIdService = async (id: string, rol: string) => {
+export const getMetasByIdService = async (id: string, rol: string, ano?: string) => {
   if (rol === 'admin') {
     const metas = await getMetas();
     return metas;
@@ -30,22 +30,9 @@ export const createMetasService = async (metaData: Partial<Meta>) => {
   const vendedorPedidos = await getPedidosByVendedorService(
     metaData.vendedor_id,
   );
-  const pedidosFiltrados = vendedorPedidos.filter(
-    (pedido) => pedido.estado === 'procesado',
-  );
-
-  const clientes = await getClientesVendedorService(metaData.vendedor_id);
-  const clientesFiltrados = clientes.filter(
-    (cliente) => cliente.estado === 'activo',
-  );
 
   const metaActualizada = {
     ...metaData,
-    ventas_actuales: vendedorPedidos.reduce(
-      (acc, pedido) => acc + pedido.total,
-      0,
-    ),
-    clientes_actuales: clientesFiltrados.length,
   };
   const nuevaMeta = await createMeta(metaActualizada);
 
@@ -54,19 +41,13 @@ export const createMetasService = async (metaData: Partial<Meta>) => {
 
 export const updateMetasClientesService = async (
   id: string,
-  accion: 'ventas_actuales' | 'clientes_actuales',
   valor: number,
-  mes: number,
+  mes: string,
   rol: string
 ) => {
   const metas = await getMetasByIdService(id, rol);
 
-  metas.map(async (meta) => {
-    if (meta.mes === mes) {
-      meta[accion] = valor;
-      await updateMeta(id, meta);
-    }
-  });
+
 };
 
 export const updateMetasService = async (

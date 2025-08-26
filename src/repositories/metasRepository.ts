@@ -8,7 +8,7 @@ export const getMetas = async () => {
 
 export const getMetaById = async (id: string) => {
   const MetaRepository = AppDataSource.getRepository(Meta);
-  return await MetaRepository.find({ where: { vendedor_id: id } });
+  return await MetaRepository.find({ where: { vendedor_id: id, ano: new Date().getFullYear()} });
 };
 
 export const createMeta = async (MetaData: Partial<Meta>) => {

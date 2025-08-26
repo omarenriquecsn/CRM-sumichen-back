@@ -19,7 +19,7 @@ const getMetas = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getMetas = getMetas;
 const getMetaById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const MetaRepository = dataBaseConfig_1.AppDataSource.getRepository(Metas_1.Meta);
-    return yield MetaRepository.find({ where: { vendedor_id: id } });
+    return yield MetaRepository.find({ where: { vendedor_id: id, ano: new Date().getFullYear() } });
 });
 exports.getMetaById = getMetaById;
 const createMeta = (MetaData) => __awaiter(void 0, void 0, void 0, function* () {

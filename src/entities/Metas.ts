@@ -21,8 +21,8 @@ export class Meta {
   @JoinColumn({ name: 'vendedor_id' })
   vendedor: Vendedor;
 
-  @Column({ type: 'int' })
-  mes: number;
+  @Column({ type: 'text' })
+  mes: string;
 
   @Column({ type: 'int' })
   ano: number;
@@ -33,15 +33,22 @@ export class Meta {
   @Column({ type: 'int' })
   objetivo_clientes: number;
 
-  @Column({ type: 'numeric', precision: 12, scale: 2, default: 0 })
-  ventas_actuales: number;
 
   @Column({ type: 'int', default: 0 })
-  clientes_actuales: number;
+  emails: number;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @Column({ type: 'int', default: 0 })
+  tareas: number;
+
+  @Column({ type: 'int', default: 0 })
+  llamadas: number;
+
+  @Column({ type: 'int', default: 0 })
+  reuniones: number;
+
+  @CreateDateColumn({ type: 'timestamptz', default: () => 'now()' })
   fecha_creacion: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ type: 'timestamptz', default: () => 'now()' })
   fecha_actualizacion: Date;
 }

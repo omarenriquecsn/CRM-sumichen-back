@@ -29,8 +29,8 @@ __decorate([
     __metadata("design:type", Vendedores_1.Vendedor)
 ], Meta.prototype, "vendedor", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int' }),
-    __metadata("design:type", Number)
+    (0, typeorm_1.Column)({ type: 'text' }),
+    __metadata("design:type", String)
 ], Meta.prototype, "mes", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'int' }),
@@ -45,19 +45,27 @@ __decorate([
     __metadata("design:type", Number)
 ], Meta.prototype, "objetivo_clientes", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'numeric', precision: 12, scale: 2, default: 0 }),
+    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
     __metadata("design:type", Number)
-], Meta.prototype, "ventas_actuales", void 0);
+], Meta.prototype, "emails", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'int', default: 0 }),
     __metadata("design:type", Number)
-], Meta.prototype, "clientes_actuales", void 0);
+], Meta.prototype, "tareas", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ type: 'timestamptz' }),
+    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
+    __metadata("design:type", Number)
+], Meta.prototype, "llamadas", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
+    __metadata("design:type", Number)
+], Meta.prototype, "reuniones", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({ type: 'timestamptz', default: () => 'now()' }),
     __metadata("design:type", Date)
 ], Meta.prototype, "fecha_creacion", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)({ type: 'timestamptz' }),
+    (0, typeorm_1.UpdateDateColumn)({ type: 'timestamptz', default: () => 'now()' }),
     __metadata("design:type", Date)
 ], Meta.prototype, "fecha_actualizacion", void 0);
 exports.Meta = Meta = __decorate([

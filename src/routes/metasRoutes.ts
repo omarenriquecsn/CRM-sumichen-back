@@ -13,7 +13,7 @@ const router: Router = Router();
 
 router.get('/metas', verificarToken, asyncHandler(getMetas));
 
-router.get('/metas/:id', verificarToken, asyncHandler(getMetasById));
+router.get('/metas/:id/', verificarToken, asyncHandler(getMetasById));
 
 router.post('/metas', verificarToken, asyncHandler(createMetas));
 

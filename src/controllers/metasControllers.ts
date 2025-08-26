@@ -9,6 +9,10 @@ import {
 import { ApiError } from '../utils/ApiError';
 
 export const getMetas = async (req: Request, res: Response) => {
+  req.user;
+  if(req.user.user_metadata.rol !== 'admin') {
+    throw new ApiError('No autorizado', 403);
+  }
   const metas = await getMetasService();
   if (metas.length === 0) throw new ApiError('No hay metas para mostrar');
   res.json(metas);
@@ -16,6 +20,8 @@ export const getMetas = async (req: Request, res: Response) => {
 
 export const getMetasById = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { ano } = req.query;
+
   const { rol } = req.user.user_metadata;
   const meta = await getMetasByIdService(id, rol);
 

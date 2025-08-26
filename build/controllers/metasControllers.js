@@ -13,6 +13,10 @@ exports.deleteMetas = exports.updateMetas = exports.createMetas = exports.getMet
 const metasServices_1 = require("../services/metasServices");
 const ApiError_1 = require("../utils/ApiError");
 const getMetas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    req.user;
+    if (req.user.user_metadata.rol !== 'admin') {
+        throw new ApiError_1.ApiError('No autorizado', 403);
+    }
     const metas = yield (0, metasServices_1.getMetasService)();
     if (metas.length === 0)
         throw new ApiError_1.ApiError('No hay metas para mostrar');
@@ -21,6 +25,7 @@ const getMetas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getMetas = getMetas;
 const getMetasById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    const { ano } = req.query;
     const { rol } = req.user.user_metadata;
     const meta = yield (0, metasServices_1.getMetasByIdService)(id, rol);
     if (!meta)
