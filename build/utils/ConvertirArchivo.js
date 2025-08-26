@@ -17,7 +17,6 @@ const pdfkit_1 = __importDefault(require("pdfkit"));
 const office_to_pdf_1 = __importDefault(require("office-to-pdf"));
 function convertirArchivo(file) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(file);
         const mime = (0, mime_types_1.lookup)(file.originalname);
         if (typeof mime === 'string' && mime.includes('image')) {
             return new Promise((resolve, reject) => {

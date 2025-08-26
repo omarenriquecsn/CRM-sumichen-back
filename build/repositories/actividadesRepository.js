@@ -37,7 +37,6 @@ const updateActividad = (id, ActividadData) => __awaiter(void 0, void 0, void 0,
     if (!ActividadData || Object.keys(ActividadData).length === 0) {
         throw new Error('No se proporcionaron datos para actualizar al Actividad.');
     }
-    console.log(ActividadData);
     const ActividadRepository = dataBaseConfig_1.AppDataSource.getRepository(Actividades_1.Actividad);
     yield ActividadRepository.update(id, ActividadData);
     return yield ActividadRepository.findOneBy({ id });

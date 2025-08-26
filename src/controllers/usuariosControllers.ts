@@ -30,7 +30,6 @@ export const createUsuario = async (req: Request, res: Response) => {
 
 export const updateUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id);
   const actualizado = await updateUsuariosService(id, req.body);
   if (!actualizado) throw new ApiError('No se pudo actualizar el usuario', 400);
   res.json(actualizado);

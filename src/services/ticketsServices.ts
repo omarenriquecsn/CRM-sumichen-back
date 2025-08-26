@@ -28,7 +28,6 @@ export const getTicketsByVendedorService = async (id: string, rol: string) => {
     return tickets;
   }
   const tickets = await getTickets();
-  console.log(tickets)
   return tickets.filter((ticket) => ticket.vendedor_id === id);
 };
 

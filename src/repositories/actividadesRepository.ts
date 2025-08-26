@@ -29,8 +29,6 @@ export const updateActividad = async (
   if (!ActividadData || Object.keys(ActividadData).length === 0) {
     throw new Error('No se proporcionaron datos para actualizar al Actividad.');
   }
-
-  console.log(ActividadData);
   const ActividadRepository = AppDataSource.getRepository(Actividad);
   await ActividadRepository.update(id, ActividadData);
   return await ActividadRepository.findOneBy({ id });

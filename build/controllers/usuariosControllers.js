@@ -36,7 +36,6 @@ const createUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createUsuario = createUsuario;
 const updateUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    console.log(id);
     const actualizado = yield (0, usuariosServices_1.updateUsuariosService)(id, req.body);
     if (!actualizado)
         throw new ApiError_1.ApiError('No se pudo actualizar el usuario', 400);

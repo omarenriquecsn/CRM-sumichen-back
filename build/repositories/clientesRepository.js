@@ -45,7 +45,6 @@ const updateCliente = (id, ClienteData) => __awaiter(void 0, void 0, void 0, fun
     if (!ClienteData || Object.keys(ClienteData).length === 0) {
         throw new Error('No se proporcionaron datos para actualizar al cliente.');
     }
-    console.log(ClienteData);
     const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
     yield ClienteRepository.update(id, ClienteData);
     return yield ClienteRepository.findOneBy({ id });

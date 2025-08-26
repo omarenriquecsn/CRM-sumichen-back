@@ -37,8 +37,6 @@ export const updateCliente = async (
   if (!ClienteData || Object.keys(ClienteData).length === 0) {
     throw new Error('No se proporcionaron datos para actualizar al cliente.');
   }
-
-  console.log(ClienteData);
   const ClienteRepository = AppDataSource.getRepository(Cliente);
   await ClienteRepository.update(id, ClienteData);
   return await ClienteRepository.findOneBy({ id });

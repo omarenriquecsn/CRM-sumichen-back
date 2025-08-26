@@ -5,7 +5,6 @@ import convertToPdf from 'office-to-pdf';
 import sharp from 'sharp';
 
 async function convertirArchivo(file: Express.Multer.File): Promise<Buffer> {
-  console.log(file);
   const mime = lookup(file.originalname);
 
   if (typeof mime === 'string' && mime.includes('image')) {
