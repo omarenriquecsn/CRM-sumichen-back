@@ -32,7 +32,6 @@ export const createClientesService = async (clienteData: Partial<Cliente>, rol: 
   const mesActual = new Date().getMonth() + 1;
   updateMetasClientesService(
     nuevoCliente.vendedor_id,
-    'clientes_actuales',
     1,
     mesActual,
     rol

@@ -34,7 +34,7 @@ exports.getClientesByIdService = getClientesByIdService;
 const createClientesService = (clienteData, rol) => __awaiter(void 0, void 0, void 0, function* () {
     const nuevoCliente = yield (0, clientesRepository_1.createCliente)(clienteData);
     const mesActual = new Date().getMonth() + 1;
-    (0, metasServices_1.updateMetasClientesService)(nuevoCliente.vendedor_id, 'clientes_actuales', 1, mesActual, rol);
+    (0, metasServices_1.updateMetasClientesService)(nuevoCliente.vendedor_id, 1, mesActual, rol);
     return nuevoCliente;
 });
 exports.createClientesService = createClientesService;

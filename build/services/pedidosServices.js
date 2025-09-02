@@ -75,7 +75,7 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
             console.error('No se pudo enviar WhatsApp al admin:', error);
         }
     }
-    yield (0, sendWhatsapp_1.default)();
+    yield (0, sendWhatsapp_1.default)('pedido');
     return pedido;
 });
 exports.createPedidosService = createPedidosService;

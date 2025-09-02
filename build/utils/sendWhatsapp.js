@@ -22,7 +22,7 @@ const recipient = process.env.META_RECIPIENT;
  * @param recipient Número de WhatsApp en formato internacional (ej: 584125072254)
  * @param templateParams Array de parámetros para la plantilla (opcional)
  */
-const sendWhatsAppTemplate = () => __awaiter(void 0, void 0, void 0, function* () {
+const sendWhatsAppTemplate = (template) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const data = {
@@ -30,7 +30,7 @@ const sendWhatsAppTemplate = () => __awaiter(void 0, void 0, void 0, function* (
             to: recipient,
             type: 'template',
             template: {
-                name: 'pedido',
+                name: template,
                 language: { code: 'es' },
             },
         };

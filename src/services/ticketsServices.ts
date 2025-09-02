@@ -16,6 +16,8 @@ import {
   getActividadesByIdService,
   updateActividadesService,
 } from './actividadesServices';
+import sendWhatsAppMessage from '../utils/sendWhatsapp';
+
 
 export const getTicketsService = async () => {
   const tickets = await getTickets();
@@ -61,6 +63,7 @@ export const createTicketsService = async (ticketData: Partial<Ticket>) => {
   };
   await createActividadesService(newActividad);
 
+  await sendWhatsAppMessage('ticket')
   return {
     message: 'Ticket creado',
     data: newTicket,

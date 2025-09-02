@@ -42,7 +42,7 @@ export const createMetasService = async (metaData: Partial<Meta>) => {
 export const updateMetasClientesService = async (
   id: string,
   valor: number,
-  mes: string,
+  mes: number,
   rol: string
 ) => {
   const metas = await getMetasByIdService(id, rol);

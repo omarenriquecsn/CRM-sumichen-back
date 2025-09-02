@@ -10,14 +10,14 @@ const recipient = process.env.META_RECIPIENT;
  * @param recipient Número de WhatsApp en formato internacional (ej: 584125072254)
  * @param templateParams Array de parámetros para la plantilla (opcional)
  */
-const sendWhatsAppTemplate = async () => {
+const sendWhatsAppTemplate = async (template: string) => {
   try {
     const data: any = {
       messaging_product: 'whatsapp',
       to: recipient,
       type: 'template',
       template: {
-        name: 'pedido',
+        name: template,
         language: { code: 'es' },
       },
     };

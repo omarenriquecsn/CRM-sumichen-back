@@ -84,7 +84,7 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
     }
   }
 
-  await sendWhatsAppMessage()
+  await sendWhatsAppMessage('pedido')
 
   return pedido;
 };

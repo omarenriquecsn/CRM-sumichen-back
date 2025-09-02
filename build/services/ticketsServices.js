@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTicketsService = exports.updateTicketsService = exports.createTicketsService = exports.getTicketsByIdService = exports.getTicketsByVendedorService = exports.getTicketsService = void 0;
 const ActividadesEnum_1 = require("../enums/ActividadesEnum");
@@ -15,6 +18,7 @@ const ticketsRepository_1 = require("../repositories/ticketsRepository");
 const usuariosRepository_1 = require("../repositories/usuariosRepository");
 const ApiError_1 = require("../utils/ApiError");
 const actividadesServices_1 = require("./actividadesServices");
+const sendWhatsapp_1 = __importDefault(require("../utils/sendWhatsapp"));
 const getTicketsService = () => __awaiter(void 0, void 0, void 0, function* () {
     const tickets = yield (0, ticketsRepository_1.getTickets)();
     return tickets;
@@ -55,6 +59,7 @@ const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, f
         id_tipo_actividad: newTicket.id
     };
     yield (0, actividadesServices_1.createActividadesService)(newActividad);
+    yield (0, sendWhatsapp_1.default)('ticket');
     return {
         message: 'Ticket creado',
         data: newTicket,
