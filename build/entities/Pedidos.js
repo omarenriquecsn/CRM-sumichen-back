@@ -15,7 +15,6 @@ const Clientes_1 = require("./Clientes");
 const Vendedores_1 = require("./Vendedores");
 const Productos_pedido_1 = require("./Productos_pedido");
 const TipoPagoEnum_1 = require("../enums/TipoPagoEnum");
-const DiasCreditoEnum_1 = require("../enums/DiasCreditoEnum");
 const MonedaEnum_1 = require("../enums/MonedaEnum");
 const TransporteEnum_1 = require("../enums/TransporteEnum");
 const EstadoPedidoEnum_1 = require("../enums/EstadoPedidoEnum");
@@ -73,7 +72,7 @@ __decorate([
     __metadata("design:type", String)
 ], Pedido.prototype, "tipo_pago", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: DiasCreditoEnum_1.DiasCreditoEnum, nullable: true }),
+    (0, typeorm_1.Column)({ type: 'integer', default: 0, nullable: true }),
     __metadata("design:type", Number)
 ], Pedido.prototype, "dias_credito", void 0);
 __decorate([

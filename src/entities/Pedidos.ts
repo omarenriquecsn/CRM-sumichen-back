@@ -57,8 +57,8 @@ export class Pedido {
   @Column({ type: 'enum', enum: TipoPagoEnum, default: TipoPagoEnum.CONTADO })
   tipo_pago: TipoPagoEnum;
 
-  @Column({ type: 'enum', enum: DiasCreditoEnum, nullable: true })
-  dias_credito?: DiasCreditoEnum;
+  @Column({ type: 'integer', default: 0, nullable: true })
+  dias_credito?: number;
 
   @Column({ type: 'enum', enum: MonedaEnum, default: MonedaEnum.DOLARES })
   moneda: MonedaEnum;
