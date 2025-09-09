@@ -28,7 +28,7 @@ export class ProductosPedido {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   cantidad: number;
 
   @Column({ name: 'pedido_id' })
