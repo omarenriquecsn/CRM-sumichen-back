@@ -22,7 +22,7 @@ export class ProductosPedido {
   @JoinColumn({ name: 'producto_id' })
   producto: Producto;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 12, scale: 4 })
   precio_unitario: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })

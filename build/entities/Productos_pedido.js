@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", Productos_1.Producto)
 ], ProductosPedido.prototype, "producto", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'decimal', precision: 10, scale: 2 }),
+    (0, typeorm_1.Column)({ type: 'decimal', precision: 12, scale: 4 }),
     __metadata("design:type", Number)
 ], ProductosPedido.prototype, "precio_unitario", void 0);
 __decorate([
