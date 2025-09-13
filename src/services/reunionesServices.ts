@@ -24,7 +24,11 @@ export const getReunionesByVendedorService = async (id: string) => {
   return reuniones.filter((reunion) => reunion.vendedor_id === id);
 };
 
-export const getReunionesByIdService = async (id: string) => {
+export const getReunionesByIdService = async (id: string, rol: string) => {
+  if(rol === 'admin'){
+    const reunion = await getReunionesService();
+    return reunion;
+  }
   const reunion = await getReunionById(id);
   return reunion;
 };

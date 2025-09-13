@@ -23,7 +23,11 @@ const getReunionesByVendedorService = (id) => __awaiter(void 0, void 0, void 0, 
     return reuniones.filter((reunion) => reunion.vendedor_id === id);
 });
 exports.getReunionesByVendedorService = getReunionesByVendedorService;
-const getReunionesByIdService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getReunionesByIdService = (id, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    if (rol === 'admin') {
+        const reunion = yield (0, exports.getReunionesService)();
+        return reunion;
+    }
     const reunion = yield (0, reunionesRepository_1.getReunionById)(id);
     return reunion;
 });

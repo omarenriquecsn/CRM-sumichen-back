@@ -21,7 +21,8 @@ const getReuniones = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getReuniones = getReuniones;
 const getReunionById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const reuniones = yield (0, reunionesServices_1.getReunionesByIdService)(id);
+    const { rol } = req.user.user_metadata;
+    const reuniones = yield (0, reunionesServices_1.getReunionesByIdService)(id, rol);
     if (reuniones.length === 0)
         throw new ApiError_1.ApiError('No hay reuniones disponibles', 404);
     res.json(reuniones);
