@@ -95,6 +95,10 @@ export const updateTicketsService = async (
         actividad.descripcion === ticketActualizado.descripcion &&
         new Date(actividad.fecha_creacion).getDate() ===
           new Date(ticketActualizado.fecha_creacion).getDate(),
+    )?? actividades.find(
+      (actividad) =>
+        actividad.id_tipo_actividad === ticketActualizado.id &&
+        actividad.tipo === ActividadesEnum.TAREA
     );
     if (!actividadActualizada)
       throw new Error('No se pudo actualizar la actividad');

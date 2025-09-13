@@ -67,17 +67,19 @@ const createTicketsService = (ticketData) => __awaiter(void 0, void 0, void 0, f
 });
 exports.createTicketsService = createTicketsService;
 const updateTicketsService = (id, ticketData, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const ticketActualizado = yield (0, ticketsRepository_1.updateTicket)(id, ticketData);
     if (!ticketActualizado)
         throw new ApiError_1.ApiError('No se pudo actualizar el ticket');
     if (ticketActualizado.estado === 'cerrado' ||
         ticketActualizado.estado === 'resuelto') {
         const actividades = yield (0, actividadesServices_1.getActividadesByIdService)(ticketActualizado.vendedor_id, rol);
-        const actividadActualizada = actividades.find((actividad) => actividad.cliente_id === ticketActualizado.cliente_id &&
+        const actividadActualizada = (_a = actividades.find((actividad) => actividad.cliente_id === ticketActualizado.cliente_id &&
             actividad.titulo === ticketActualizado.titulo &&
             actividad.descripcion === ticketActualizado.descripcion &&
             new Date(actividad.fecha_creacion).getDate() ===
-                new Date(ticketActualizado.fecha_creacion).getDate());
+                new Date(ticketActualizado.fecha_creacion).getDate())) !== null && _a !== void 0 ? _a : actividades.find((actividad) => actividad.id_tipo_actividad === ticketActualizado.id &&
+            actividad.tipo === ActividadesEnum_1.ActividadesEnum.TAREA);
         if (!actividadActualizada)
             throw new Error('No se pudo actualizar la actividad');
         yield (0, actividadesServices_1.updateActividadesService)(actividadActualizada.id, {

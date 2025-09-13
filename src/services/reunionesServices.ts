@@ -32,8 +32,7 @@ export const getReunionesByIdService = async (id: string) => {
 export const createReunionesService = async (ReunionData: Partial<Reunion>) => {
   const neuvaReunion = await createReunion(ReunionData);
 
-  if (neuvaReunion === null)
-    throw new Error('No se pudo crear la reunion');
+  if (neuvaReunion === null) throw new Error('No se pudo crear la reunion');
 
   const newActividad: Partial<Actividad> = {
     titulo: neuvaReunion.titulo,
@@ -53,7 +52,7 @@ export const createReunionesService = async (ReunionData: Partial<Reunion>) => {
 export const updateReunionesService = async (
   id: string,
   reunionData: Partial<Reunion>,
-  rol: string
+  rol: string,
 ) => {
   const reunionActualizada = await updateReunion(id, reunionData);
 
@@ -62,20 +61,26 @@ export const updateReunionesService = async (
   if (reunionActualizada.estado === 'completada') {
     const allActividades = await getActividadesByIdService(
       reunionActualizada.vendedor_id,
-      rol
+      rol,
     );
+    console.log(reunionActualizada);
 
     const actividadActualizada = allActividades.find(
       (actividad) =>
         actividad.cliente_id === reunionActualizada.cliente_id &&
-        actividad.titulo === reunionActualizada.titulo &&
-        actividad.descripcion === reunionActualizada.descripcion &&
-        new Date(actividad.fecha_creacion).getDate() ===
-          new Date(reunionActualizada.fecha_creacion).getDate(),
+      actividad.titulo === reunionActualizada.titulo &&
+      new Date(actividad.fecha_creacion).getDate() ===
+      new Date(reunionActualizada.fecha_creacion).getDate() &&
+      actividad.tipo === ActividadesEnum.REUNION
+    ) ?? allActividades.find(
+      (actividad) =>
+        actividad.id_tipo_actividad === reunionActualizada.id &&
+        actividad.tipo === ActividadesEnum.REUNION
     );
-
-    if (!actividadActualizada)
+    
+    if (!actividadActualizada) {
       throw new Error('No se pudo actualizar la actividad');
+    }
     await updateActividadesService(actividadActualizada.id, {
       completado: true,
     });

@@ -47,18 +47,22 @@ const createReunionesService = (ReunionData) => __awaiter(void 0, void 0, void 0
 });
 exports.createReunionesService = createReunionesService;
 const updateReunionesService = (id, reunionData, rol) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const reunionActualizada = yield (0, reunionesRepository_1.updateReunion)(id, reunionData);
     if (!reunionActualizada)
         throw new Error('No se pudo actualizar la reunion');
     if (reunionActualizada.estado === 'completada') {
         const allActividades = yield (0, actividadesServices_1.getActividadesByIdService)(reunionActualizada.vendedor_id, rol);
-        const actividadActualizada = allActividades.find((actividad) => actividad.cliente_id === reunionActualizada.cliente_id &&
+        console.log(reunionActualizada);
+        const actividadActualizada = (_a = allActividades.find((actividad) => actividad.cliente_id === reunionActualizada.cliente_id &&
             actividad.titulo === reunionActualizada.titulo &&
-            actividad.descripcion === reunionActualizada.descripcion &&
             new Date(actividad.fecha_creacion).getDate() ===
-                new Date(reunionActualizada.fecha_creacion).getDate());
-        if (!actividadActualizada)
+                new Date(reunionActualizada.fecha_creacion).getDate() &&
+            actividad.tipo === ActividadesEnum_1.ActividadesEnum.REUNION)) !== null && _a !== void 0 ? _a : allActividades.find((actividad) => actividad.id_tipo_actividad === reunionActualizada.id &&
+            actividad.tipo === ActividadesEnum_1.ActividadesEnum.REUNION);
+        if (!actividadActualizada) {
             throw new Error('No se pudo actualizar la actividad');
+        }
         yield (0, actividadesServices_1.updateActividadesService)(actividadActualizada.id, {
             completado: true,
         });
