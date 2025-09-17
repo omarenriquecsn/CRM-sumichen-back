@@ -51,7 +51,7 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
     total: 0,
   };
 
-  neuevoPedido.total = neuevoPedido.subtotal * (neuevoPedido.impuestos + 1);
+  neuevoPedido.total = neuevoPedido.subtotal;
 
   const pedido = await createPedido(neuevoPedido);
 

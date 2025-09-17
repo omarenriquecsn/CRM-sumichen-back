@@ -54,7 +54,7 @@ exports.getPedidosByIdService = getPedidosByIdService;
 const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, function* () {
     const { productos } = pedidoData, rest = __rest(pedidoData, ["productos"]);
     const neuevoPedido = Object.assign(Object.assign({}, rest), { impuestos: rest.impuestos === 'exento' ? 0 : 0.16, subtotal: productos.reduce((acc, producto) => acc + producto.precio_unitario * producto.cantidad, 0), total: 0 });
-    neuevoPedido.total = neuevoPedido.subtotal * (neuevoPedido.impuestos + 1);
+    neuevoPedido.total = neuevoPedido.subtotal;
     const pedido = yield (0, pedidosRepository_1.createPedido)(neuevoPedido);
     if (!pedido) {
         throw new Error('Error al crear el pedido');
