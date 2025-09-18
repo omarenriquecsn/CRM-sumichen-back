@@ -14,6 +14,7 @@ const productos_pedidoRoutes_1 = __importDefault(require("./productos_pedidoRout
 const reunionesRoutes_1 = __importDefault(require("./reunionesRoutes"));
 const ticketsRoutes_1 = __importDefault(require("./ticketsRoutes"));
 const usuariosRoutes_1 = __importDefault(require("./usuariosRoutes"));
+const descargasRoutes_1 = __importDefault(require("./descargasRoutes"));
 // import turnRoutes from "./turnRoutes"
 const router = (0, express_1.Router)();
 router.use('/', actividadesRoutes_1.default);
@@ -26,4 +27,5 @@ router.use('/', productos_pedidoRoutes_1.default);
 router.use('/', reunionesRoutes_1.default);
 router.use('/', ticketsRoutes_1.default);
 router.use('/', usuariosRoutes_1.default);
+router.use('/', descargasRoutes_1.default);
 exports.default = router;
