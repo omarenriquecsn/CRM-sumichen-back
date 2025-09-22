@@ -29,7 +29,7 @@ export class Cliente {
   @Column()
   apellido: string;
 
-  @Column({ unique: true })
+  @Column()
   email: string;
 
   @Column()
