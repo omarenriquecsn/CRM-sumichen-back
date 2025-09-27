@@ -17,6 +17,8 @@ const exceljs_1 = __importDefault(require("exceljs"));
 const pedidosServices_1 = require("../services/pedidosServices");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const clientesServices_1 = require("../services/clientesServices");
+const usuariosServices_1 = require("../services/usuariosServices");
 function exportPedidosToExcel() {
     return __awaiter(this, void 0, void 0, function* () {
         let lastExportPath = null;
@@ -31,6 +33,16 @@ function exportPedidosToExcel() {
         }
         // 1. Consulta los pedidos desde la base de datos
         const query = yield (0, pedidosServices_1.getPedidosService)();
+        const queryClientes = yield (0, clientesServices_1.getClientesService)();
+        const queryVendedores = yield (0, usuariosServices_1.getUsuariosService)();
+        const vendedores = queryVendedores || [];
+        if (vendedores.length === 0) {
+            throw new Error('No hay vendedores para exportar');
+        }
+        const clientes = queryClientes || [];
+        if (clientes.length === 0) {
+            throw new Error('No hay clientes para exportar');
+        }
         const pedidos = query || [];
         if (pedidos.length === 0) {
             throw new Error('No hay pedidos para exportar');
@@ -41,8 +53,8 @@ function exportPedidosToExcel() {
         // 3. Definir columnas con encabezados claros
         sheet.columns = [
             { header: 'Número de Pedido', key: 'numero', width: 15 },
-            { header: 'Cliente ID', key: 'cliente_id', width: 36 },
-            { header: 'Vendedor ID', key: 'vendedor_id', width: 36 },
+            { header: 'Cliente', key: 'cliente_id', width: 50 },
+            { header: 'Vendedor', key: 'vendedor_id', width: 36 },
             { header: 'Subtotal', key: 'subtotal', width: 15 },
             { header: 'Impuestos', key: 'impuestos', width: 15 },
             { header: 'Total', key: 'total', width: 15 },
@@ -55,10 +67,35 @@ function exportPedidosToExcel() {
             { header: 'Estado', key: 'estado', width: 15 },
             { header: 'Notas', key: 'notas', width: 30 },
             { header: 'Días de Crédito', key: 'dias_credito', width: 15 },
+            { header: 'Productos', key: 'producto', width: 30 },
+            { header: 'Cantidad', key: 'cantidad', width: 15 },
+            { header: 'Precio Unitario', key: 'precio_unitario', width: 15 },
         ];
         // 4. Agregar filas con formato de fecha
         pedidos.forEach((pedido) => {
-            sheet.addRow(Object.assign(Object.assign({}, pedido), { fecha_entrega: formatDate(pedido.fecha_entrega), fecha_creacion: formatDate(pedido.fecha_creacion), fecha_actualizacion: formatDate(pedido.fecha_actualizacion) }));
+            pedido.productos_pedido.forEach(pp => {
+                var _a, _b, _c;
+                sheet.addRow({
+                    numero: pedido.numero,
+                    cliente_id: ((_a = clientes.find(c => c.id === pedido.cliente_id)) === null || _a === void 0 ? void 0 : _a.empresa) || pedido.cliente_id,
+                    vendedor_id: ((_b = vendedores.find(v => v.id === pedido.vendedor_id)) === null || _b === void 0 ? void 0 : _b.nombre) || pedido.vendedor_id,
+                    subtotal: pedido.subtotal,
+                    impuestos: pedido.impuestos,
+                    total: pedido.total,
+                    fecha_entrega: formatDate(pedido.fecha_entrega),
+                    tipo_pago: pedido.tipo_pago,
+                    moneda: pedido.moneda,
+                    transporte: pedido.transporte,
+                    fecha_creacion: formatDate(pedido.fecha_creacion),
+                    fecha_actualizacion: formatDate(pedido.fecha_actualizacion),
+                    estado: pedido.estado,
+                    notas: pedido.notas,
+                    dias_credito: pedido.dias_credito,
+                    producto: (_c = pp.producto) === null || _c === void 0 ? void 0 : _c.nombre,
+                    cantidad: pp.cantidad,
+                    precio_unitario: pp.precio_unitario,
+                });
+            });
         });
         // 5. Estilizar encabezado
         sheet.getRow(1).font = { bold: true };

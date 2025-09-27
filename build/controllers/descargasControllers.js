@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDescargasPedidos = void 0;
+exports.getDescargasMetas = exports.getDescargasActividades = exports.getDescargasReuniones = exports.getDescargasClientes = exports.getDescargasPedidos = void 0;
 const descargasServices_1 = require("../services/descargasServices");
 const getDescargasPedidos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('getDescargas called');
@@ -22,3 +22,47 @@ const getDescargasPedidos = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.getDescargasPedidos = getDescargasPedidos;
+const getDescargasClientes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('getDescargas called');
+    try {
+        const descargas = yield (0, descargasServices_1.getDescargasClientesService)();
+        res.status(200).download(descargas, 'clientes.xlsx');
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error al obtener las descargas" });
+    }
+});
+exports.getDescargasClientes = getDescargasClientes;
+const getDescargasReuniones = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('getDescargas called');
+    try {
+        const descargas = yield (0, descargasServices_1.getDescargasReunionesService)();
+        res.status(200).download(descargas, 'reuniones.xlsx');
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error al obtener las descargas" });
+    }
+});
+exports.getDescargasReuniones = getDescargasReuniones;
+const getDescargasActividades = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('getDescargas called');
+    try {
+        const descargas = yield (0, descargasServices_1.getDescargasActividadesService)();
+        res.status(200).download(descargas, 'actividades.xlsx');
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error al obtener las descargas" });
+    }
+});
+exports.getDescargasActividades = getDescargasActividades;
+const getDescargasMetas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('getDescargas called');
+    try {
+        const descargas = yield (0, descargasServices_1.getDescargasMetasService)();
+        res.status(200).download(descargas, 'metas.xlsx');
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error al obtener las descargas" });
+    }
+});
+exports.getDescargasMetas = getDescargasMetas;
