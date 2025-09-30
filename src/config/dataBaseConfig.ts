@@ -11,6 +11,7 @@ import { Producto } from '../entities/Productos';
 import { ProductosPedido } from '../entities/Productos_pedido';
 import { Meta } from '../entities/Metas';
 import { Cliente } from '../entities/Clientes';
+import { Notificacion } from '../entities/Notificaiones';
 dotenv.config();
 
 export const AppDataSource = new DataSource({
@@ -29,6 +30,7 @@ export const AppDataSource = new DataSource({
     ProductosPedido,
     Meta,
     Cliente,
+    Notificacion,
   ],
   migrations: ['src/database/migrations/**/*.ts'],
   dropSchema: false,

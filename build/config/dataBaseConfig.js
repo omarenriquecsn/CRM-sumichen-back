@@ -17,6 +17,7 @@ const Productos_1 = require("../entities/Productos");
 const Productos_pedido_1 = require("../entities/Productos_pedido");
 const Metas_1 = require("../entities/Metas");
 const Clientes_1 = require("../entities/Clientes");
+const Notificaiones_1 = require("../entities/Notificaiones");
 dotenv_1.default.config();
 exports.AppDataSource = new typeorm_1.DataSource({
     type: 'postgres',
@@ -34,6 +35,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
         Productos_pedido_1.ProductosPedido,
         Metas_1.Meta,
         Clientes_1.Cliente,
+        Notificaiones_1.Notificacion,
     ],
     migrations: ['src/database/migrations/**/*.ts'],
     dropSchema: false,
