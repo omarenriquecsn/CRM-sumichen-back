@@ -43,24 +43,26 @@ async function exportPedidosToExcel() {
 
   // 3. Definir columnas con encabezados claros
   sheet.columns = [
+    { header: 'Fecha de Creación', key: 'fecha_creacion', width: 20 },
+    { header: 'Fecha de Entrega', key: 'fecha_entrega', width: 20 },
     { header: 'Número de Pedido', key: 'numero', width: 15 },
     { header: 'Cliente', key: 'cliente_id', width: 50 },
-    { header: 'Vendedor', key: 'vendedor_id', width: 36 },
-    { header: 'Subtotal', key: 'subtotal', width: 15 },
-    { header: 'Impuestos', key: 'impuestos', width: 15 },
-    { header: 'Total', key: 'total', width: 15 },
-    { header: 'Fecha de Entrega', key: 'fecha_entrega', width: 20 },
-    { header: 'Tipo de Pago', key: 'tipo_pago', width: 15 },
-    { header: 'Moneda', key: 'moneda', width: 10 },
-    { header: 'Transporte', key: 'transporte', width: 15 },
-    { header: 'Fecha de Creación', key: 'fecha_creacion', width: 20 },
-    { header: 'Última Actualización', key: 'fecha_actualizacion', width: 20 },
-    { header: 'Estado', key: 'estado', width: 15 },
-    { header: 'Notas', key: 'notas', width: 30 },
-    { header: 'Días de Crédito', key: 'dias_credito', width: 15 },
     { header: 'Productos', key: 'producto', width: 30 },
     { header: 'Cantidad', key: 'cantidad', width: 15 },
     { header: 'Precio Unitario', key: 'precio_unitario', width: 15 },
+    { header: 'Total por Producto', key: 'total_producto', width: 15 },
+    { header: 'Subtotal', key: 'subtotal', width: 15 },
+    { header: 'Impuestos', key: 'impuestos', width: 15 },
+    { header: 'IVA', key: 'iva', width: 15 },
+    { header: 'Total', key: 'total', width: 15 },
+    { header: 'Tipo de Pago', key: 'tipo_pago', width: 15 },
+    { header: 'Días de Crédito', key: 'dias_credito', width: 15 },
+    { header: 'Moneda', key: 'moneda', width: 10 },
+    { header: 'Transporte', key: 'transporte', width: 15 },
+    { header: 'Notas', key: 'notas', width: 30 },
+    { header: 'Última Actualización', key: 'fecha_actualizacion', width: 20 },
+    { header: 'Vendedor', key: 'vendedor_id', width: 36 },
+    { header: 'Estado', key: 'estado', width: 15 },
   ];
 
   // 4. Agregar filas con formato de fecha
@@ -70,9 +72,10 @@ async function exportPedidosToExcel() {
         numero: pedido.numero,
         cliente_id: clientes.find(c => c.id === pedido.cliente_id)?.empresa || pedido.cliente_id,
         vendedor_id: vendedores.find(v => v.id === pedido.vendedor_id)?.nombre || pedido.vendedor_id,
-        subtotal: pedido.subtotal,
-        impuestos: pedido.impuestos,
-        total: pedido.total,
+        subtotal: Number(pedido.subtotal),
+        impuestos: Number(pedido.impuestos),
+        iva: Number(pedido.subtotal) * Number(pedido.impuestos),
+        total: (Number(pedido.subtotal) * Number(pedido.impuestos)) + Number(pedido.subtotal),
         fecha_entrega: formatDate(pedido.fecha_entrega),
         tipo_pago: pedido.tipo_pago,
         moneda: pedido.moneda,
@@ -83,8 +86,9 @@ async function exportPedidosToExcel() {
         notas: pedido.notas,
         dias_credito: pedido.dias_credito,
         producto: pp.producto?.nombre, 
-        cantidad: pp.cantidad,
-        precio_unitario: pp.precio_unitario,
+        cantidad: Number(pp.cantidad),
+        precio_unitario: Number(pp.precio_unitario),
+        total_producto: Number(pp.precio_unitario) * Number(pp.cantidad)
       });
     });
   });
