@@ -22,6 +22,7 @@ const obtenerNotificacionesController = (req, res) => __awaiter(void 0, void 0, 
 exports.obtenerNotificacionesController = obtenerNotificacionesController;
 const crearNotificacionController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usuarioId = req.body.vendedor_id;
+    console.log('usuarioId:', usuarioId);
     yield (0, notificacionesService_1.crearNotificacion)(req.body)(usuarioId, req.body.descripcion, req.body.tipo);
     res.status(201).send();
 });

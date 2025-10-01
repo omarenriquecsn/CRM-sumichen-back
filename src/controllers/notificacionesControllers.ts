@@ -16,6 +16,7 @@ export const obtenerNotificacionesController = async (req: Request, res: Respons
 
 export const crearNotificacionController = async (req: Request, res: Response) => {
   const usuarioId = req.body.vendedor_id;
+  console.log('usuarioId:', usuarioId);
   await crearNotificacion(req.body)(usuarioId, req.body.descripcion, req.body.tipo);
   res.status(201).send();
 };

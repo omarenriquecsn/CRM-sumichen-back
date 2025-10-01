@@ -14,5 +14,5 @@ export const marcarNotificacionComoLeida = async (id: string) => {
   await NotificacionRepository.update(id, { leida: true });
 };
 export const eliminarNotificacion = async (id: string) => {
-  await NotificacionRepository.delete(id);
+  await NotificacionRepository.delete({ vendedor_id: id });
 };

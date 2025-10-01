@@ -29,6 +29,6 @@ const marcarNotificacionComoLeida = (id) => __awaiter(void 0, void 0, void 0, fu
 });
 exports.marcarNotificacionComoLeida = marcarNotificacionComoLeida;
 const eliminarNotificacion = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    yield NotificacionRepository.delete(id);
+    yield NotificacionRepository.delete({ vendedor_id: id });
 });
 exports.eliminarNotificacion = eliminarNotificacion;
