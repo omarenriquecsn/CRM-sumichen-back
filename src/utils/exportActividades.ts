@@ -18,7 +18,7 @@ async function exportActividadesToExcel() {
   if (clientes.length === 0) {
     throw new Error('No hay clientes para exportar');
   }
-  const actividades = queryActividades.filter((meta) => new Date(meta.fecha_creacion).getMonth() === new Date().getMonth()) || [];
+  const actividades = Array.isArray(queryActividades) ? queryActividades : [] ;
   if (actividades.length === 0) {
     throw new Error('No hay actividades para exportar');
   }

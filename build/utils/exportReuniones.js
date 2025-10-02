@@ -31,7 +31,7 @@ function exportReunionesToExcel() {
         if (clientes.length === 0) {
             throw new Error('No hay clientes para exportar');
         }
-        const reuniones = queryReuniones.filter((meta) => new Date(meta.fecha_creacion).getMonth() === new Date().getMonth()) || [];
+        const reuniones = Array.isArray(queryReuniones) ? queryReuniones : [];
         if (reuniones.length === 0) {
             throw new Error('No hay reuniones para exportar');
         }
