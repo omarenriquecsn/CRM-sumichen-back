@@ -64,10 +64,10 @@ function exportClientesToExcel() {
                 notas: cliente.notas || 'N/A',
                 vendedor: vendedor ? `${vendedor.nombre} ${vendedor.apellido}` : 'N/A',
                 fecha_creacion: cliente.fecha_creacion
-                    ? new Date(cliente.fecha_creacion).toLocaleDateString()
+                    ? cliente.fecha_creacion
                     : 'N/A',
                 fecha_actualizacion: cliente.fecha_actualizacion
-                    ? new Date(cliente.fecha_actualizacion).toLocaleDateString()
+                    ? cliente.fecha_actualizacion
                     : 'N/A',
             });
         });
