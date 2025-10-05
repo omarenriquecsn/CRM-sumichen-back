@@ -30,7 +30,9 @@ const productos_pedidoServices_1 = require("./productos_pedidoServices");
 const whatsapp_1 = require("../utils/whatsapp");
 const dotenv_1 = __importDefault(require("dotenv"));
 const clientesRepository_1 = require("../repositories/clientesRepository");
+const clientesRepository_2 = require("../repositories/clientesRepository");
 const sendWhatsapp_1 = __importDefault(require("../utils/sendWhatsapp"));
+const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
 dotenv_1.default.config();
 const getPedidosService = () => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosRepository_1.getPedidos)();
@@ -66,6 +68,10 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
     // Notificación WhatsApp al admin
     const adminNumber = process.env.ADMIN_WHATSAPP_NUMBER;
     const cliente = yield (0, clientesRepository_1.getClientesByIdAuxiliar)(pedido.cliente_id);
+    if (cliente && cliente.estado !== 'activo') {
+        cliente.estado = EstadoClienteEnum_1.EstadoClienteEnum.ACTIVO;
+        yield (0, clientesRepository_2.updateCliente)(cliente.id, cliente);
+    }
     const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente === null || cliente === void 0 ? void 0 : cliente.empresa}, Total: ${pedido.total}`;
     if (adminNumber) {
         try {
