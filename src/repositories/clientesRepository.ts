@@ -24,6 +24,11 @@ export const getClienteById = async (id: string) => {
   });
 };
 
+export const getOneCliente = async (id: string) => {
+  const ClienteRepository = AppDataSource.getRepository(Cliente);
+  return await ClienteRepository.findOneBy({ id });
+}
+
 export const createCliente = async (ClienteData: Partial<Cliente>) => {
   const ClienteRepository = AppDataSource.getRepository(Cliente);
   const newCliente = ClienteRepository.create(ClienteData);

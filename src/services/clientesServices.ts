@@ -1,3 +1,4 @@
+import { get } from 'http';
 import { Cliente } from '../entities/Clientes';
 import {
   getClienteById,
@@ -5,6 +6,7 @@ import {
   createCliente,
   updateCliente,
   deleteCliente,
+  getOneCliente
 } from '../repositories/clientesRepository';
 import { updateMetasClientesService } from './metasServices';
 
@@ -43,6 +45,11 @@ export const updateClientesService = async (
   id: string,
   clienteData: Partial<Cliente>,
 ) => {
+  const cliente = await getOneCliente(id);
+  if(cliente && clienteData.estado  && cliente.estado !== clienteData.estado )   {
+    clienteData.fecha_estado = new Date();
+    clienteData.estado_anterior = cliente?.estado;
+  }
   const clienteActualizado = await updateCliente(id, clienteData);
   return {
     message: 'Cliente actualizado',

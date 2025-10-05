@@ -15,6 +15,8 @@ const allowedOrigins = [
     'http://localhost:5173',
     'https://crm-sumichen.vercel.app',
     'https://crm-sumichen-back.vercel.app',
+    'https://crmsumichem.vps.webdock.cloud',
+    'https://crmsumichen.com',
 ];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {

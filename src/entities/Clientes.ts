@@ -52,6 +52,13 @@ export class Cliente {
   })
   etapa_venta: EtapaDeVentaEnum;
 
+    // En tu entidad Cliente
+  @Column({ type: 'text', nullable: true })
+  estado_anterior?: string;
+
+    @Column({ type: 'timestamptz', nullable: true })
+  fecha_estado?: Date;
+
   @Column({ type: 'text', nullable: true })
   notas?: string;
 

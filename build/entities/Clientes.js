@@ -73,6 +73,14 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
+], Cliente.prototype, "estado_anterior", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamptz', nullable: true }),
+    __metadata("design:type", Date)
+], Cliente.prototype, "fecha_estado", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
 ], Cliente.prototype, "notas", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, default: 'sin direccion' }),

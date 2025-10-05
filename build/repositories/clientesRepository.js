@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCliente = exports.updateCliente = exports.createCliente = exports.getClienteById = exports.getClientesByIdAuxiliar = exports.getClientes = void 0;
+exports.deleteCliente = exports.updateCliente = exports.createCliente = exports.getOneCliente = exports.getClienteById = exports.getClientesByIdAuxiliar = exports.getClientes = void 0;
 const dataBaseConfig_1 = require("../config/dataBaseConfig");
 const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
 const Clientes_1 = require("../entities/Clientes");
@@ -35,6 +35,11 @@ const getClienteById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.getClienteById = getClienteById;
+const getOneCliente = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
+    return yield ClienteRepository.findOneBy({ id });
+});
+exports.getOneCliente = getOneCliente;
 const createCliente = (ClienteData) => __awaiter(void 0, void 0, void 0, function* () {
     const ClienteRepository = dataBaseConfig_1.AppDataSource.getRepository(Clientes_1.Cliente);
     const newCliente = ClienteRepository.create(ClienteData);
