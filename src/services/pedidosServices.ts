@@ -19,6 +19,7 @@ import { getClientesByIdAuxiliar } from '../repositories/clientesRepository';
 import { updateCliente } from '../repositories/clientesRepository';
 import sendWhatsAppMessage from '../utils/sendWhatsapp';
 import { EstadoClienteEnum } from '../enums/EstadoClienteEnum';
+import { EtapaDeVentaEnum } from '../enums/EtapaDeVentaEnum';
 dotenv.config();
 
 export const getPedidosService = async () => {
@@ -80,6 +81,7 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
   const cliente = await getClientesByIdAuxiliar(pedido.cliente_id);
   if(cliente && cliente.estado !== 'activo'){
     cliente.estado = EstadoClienteEnum.ACTIVO;
+    cliente.etapa_venta = EtapaDeVentaEnum.CERRADO;
     await updateCliente(cliente.id, cliente);
   }
     

@@ -33,6 +33,7 @@ const clientesRepository_1 = require("../repositories/clientesRepository");
 const clientesRepository_2 = require("../repositories/clientesRepository");
 const sendWhatsapp_1 = __importDefault(require("../utils/sendWhatsapp"));
 const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
+const EtapaDeVentaEnum_1 = require("../enums/EtapaDeVentaEnum");
 dotenv_1.default.config();
 const getPedidosService = () => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosRepository_1.getPedidos)();
@@ -70,6 +71,7 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
     const cliente = yield (0, clientesRepository_1.getClientesByIdAuxiliar)(pedido.cliente_id);
     if (cliente && cliente.estado !== 'activo') {
         cliente.estado = EstadoClienteEnum_1.EstadoClienteEnum.ACTIVO;
+        cliente.etapa_venta = EtapaDeVentaEnum_1.EtapaDeVentaEnum.CERRADO;
         yield (0, clientesRepository_2.updateCliente)(cliente.id, cliente);
     }
     const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente === null || cliente === void 0 ? void 0 : cliente.empresa}, Total: ${pedido.total}`;
