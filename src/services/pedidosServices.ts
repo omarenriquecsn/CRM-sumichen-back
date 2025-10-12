@@ -85,14 +85,14 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
     await updateCliente(cliente.id, cliente);
   }
     
-  const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente?.empresa}, Total: ${pedido.total}`;
-  if (adminNumber) {
-    try {
-      await sendWhatsappNotification(mensaje, adminNumber);
-    } catch (error) {
-      console.error('No se pudo enviar WhatsApp al admin:', error);
-    }
-  }
+  // const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente?.empresa}, Total: ${pedido.total}`;
+  // if (adminNumber) {
+  //   try {
+  //     await sendWhatsappNotification(mensaje, adminNumber);
+  //   } catch (error) {
+  //     console.error('No se pudo enviar WhatsApp al admin:', error);
+  //   }
+  // }
 
   await sendWhatsAppMessage('pedido')
 

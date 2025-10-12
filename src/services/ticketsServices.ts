@@ -63,7 +63,7 @@ export const createTicketsService = async (ticketData: Partial<Ticket>) => {
   };
   await createActividadesService(newActividad);
 
-  await sendWhatsAppMessage('ticket')
+   await sendWhatsAppMessage('ticket')
   return {
     message: 'Ticket creado',
     data: newTicket,

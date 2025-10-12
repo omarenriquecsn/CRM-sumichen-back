@@ -27,11 +27,9 @@ exports.deletePedidosService = exports.updatePedidosService = exports.createPedi
 const pedidosRepository_1 = require("../repositories/pedidosRepository");
 const producto_pedidoRepository_1 = require("../repositories/producto_pedidoRepository");
 const productos_pedidoServices_1 = require("./productos_pedidoServices");
-const whatsapp_1 = require("../utils/whatsapp");
 const dotenv_1 = __importDefault(require("dotenv"));
 const clientesRepository_1 = require("../repositories/clientesRepository");
 const clientesRepository_2 = require("../repositories/clientesRepository");
-const sendWhatsapp_1 = __importDefault(require("../utils/sendWhatsapp"));
 const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
 const EtapaDeVentaEnum_1 = require("../enums/EtapaDeVentaEnum");
 dotenv_1.default.config();
@@ -74,16 +72,15 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
         cliente.etapa_venta = EtapaDeVentaEnum_1.EtapaDeVentaEnum.CERRADO;
         yield (0, clientesRepository_2.updateCliente)(cliente.id, cliente);
     }
-    const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente === null || cliente === void 0 ? void 0 : cliente.empresa}, Total: ${pedido.total}`;
-    if (adminNumber) {
-        try {
-            yield (0, whatsapp_1.sendWhatsappNotification)(mensaje, adminNumber);
-        }
-        catch (error) {
-            console.error('No se pudo enviar WhatsApp al admin:', error);
-        }
-    }
-    yield (0, sendWhatsapp_1.default)('pedido');
+    // const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente?.empresa}, Total: ${pedido.total}`;
+    // if (adminNumber) {
+    //   try {
+    //     await sendWhatsappNotification(mensaje, adminNumber);
+    //   } catch (error) {
+    //     console.error('No se pudo enviar WhatsApp al admin:', error);
+    //   }
+    // }
+    // await sendWhatsAppMessage('pedido')
     return pedido;
 });
 exports.createPedidosService = createPedidosService;
