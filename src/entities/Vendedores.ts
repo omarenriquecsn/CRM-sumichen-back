@@ -36,6 +36,9 @@ export class Vendedor {
   @Column({ nullable: true, default: 0 })
   meta_mensual_clientes?: number;
 
+   @Column({ nullable: true, default: 0 })
+  monto_negociacion_mes?: number;
+
   @CreateDateColumn({ type: 'timestamptz' })
   fecha_creacion?: Date;
 

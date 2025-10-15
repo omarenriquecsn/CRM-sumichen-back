@@ -68,6 +68,12 @@ export class Cliente {
   @Column({ nullable: true, default: 'valencia' })
   ciudad: string;
 
+  @Column({nullable: true})
+  direcciion_envio?: string;
+
+  @Column({nullable: true})
+  google_maps?: string;
+
   @Column({ type: 'date', nullable: true, default: new Date() })
   fecha_creacion?: Date;
 
