@@ -69,7 +69,7 @@ export class Cliente {
   ciudad: string;
 
   @Column({nullable: true})
-  direcciion_envio?: string;
+  direccion_entrega?: string;
 
   @Column({nullable: true})
   google_maps?: string;
