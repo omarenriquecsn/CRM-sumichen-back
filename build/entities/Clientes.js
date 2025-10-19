@@ -91,6 +91,14 @@ __decorate([
     __metadata("design:type", String)
 ], Cliente.prototype, "ciudad", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Cliente.prototype, "direccion_entrega", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Cliente.prototype, "google_maps", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'date', nullable: true, default: new Date() }),
     __metadata("design:type", Date)
 ], Cliente.prototype, "fecha_creacion", void 0);

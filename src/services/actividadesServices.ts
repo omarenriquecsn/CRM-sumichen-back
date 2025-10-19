@@ -1,4 +1,5 @@
 import { Actividad } from '../entities/Actividades';
+import { ActividadesEnum } from '../enums/ActividadesEnum';
 import {
   getActividads,
   getActividadById,
@@ -6,6 +7,8 @@ import {
   updateActividad,
   deleteActividad,
 } from '../repositories/actividadesRepository';
+import { updateReunionesService } from './reunionesServices';
+import { updateTicketsService } from './ticketsServices';
 
 export const getActividadesService = async () => {
   const actividades = await getActividads();
@@ -38,6 +41,15 @@ export const updateActividadesService = async (
   id: string,
   ActividadData: Partial<Actividad>,
 ) => {
+  if (ActividadData && ActividadData.tipo === ActividadesEnum.REUNION  && ActividadData.id_tipo_actividad) {
+    // pass the reunion id string to the service
+    await updateReunionesService(ActividadData.id_tipo_actividad, { descripcion: ActividadData.descripcion }, 'vendedor');
+  }
+  if(ActividadData && ActividadData.tipo === ActividadesEnum.TAREA && ActividadData.id_tipo_actividad){
+   
+    // Here you can add logic to update the related TAREA entity if needed
+    await updateTicketsService(ActividadData.id_tipo_actividad, { descripcion: ActividadData.descripcion }, 'vendedor');
+  }
   const actividadActualizada = await updateActividad(id, ActividadData);
   return actividadActualizada;
 };

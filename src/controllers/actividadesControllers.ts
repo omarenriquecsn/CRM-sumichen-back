@@ -35,7 +35,7 @@ export const createActividades = async (req: Request, res: Response) => {
 };
 
 export const updateActividades = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { id } = req.params;  
   const laActividad = await updateActividadesService(id, req.body);
 
   if (!laActividad) throw new ApiError('No se actualizo la activdad', 400);

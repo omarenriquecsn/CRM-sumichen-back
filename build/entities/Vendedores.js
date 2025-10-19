@@ -52,6 +52,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Vendedor.prototype, "meta_mensual_clientes", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: 0 }),
+    __metadata("design:type", Number)
+], Vendedor.prototype, "monto_negociacion_mes", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamptz' }),
     __metadata("design:type", Date)
 ], Vendedor.prototype, "fecha_creacion", void 0);
