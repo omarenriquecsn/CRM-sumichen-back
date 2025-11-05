@@ -13,4 +13,7 @@ export class Producto {
 
   @Column({ type: 'varchar' })
   unidad_medida: string;
+
+  @Column({ type: 'decimal', precision: 12, scale: 4, default: 0 })
+  precio_base: number;
 }
