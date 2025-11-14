@@ -30,6 +30,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
 ], Producto.prototype, "unidad_medida", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'decimal', precision: 12, scale: 4, default: 0 }),
+    __metadata("design:type", Number)
+], Producto.prototype, "precio_base", void 0);
 exports.Producto = Producto = __decorate([
     (0, typeorm_1.Entity)({ name: 'productos' })
 ], Producto);

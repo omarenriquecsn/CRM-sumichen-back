@@ -27,12 +27,15 @@ exports.deletePedidosService = exports.updatePedidosService = exports.createPedi
 const pedidosRepository_1 = require("../repositories/pedidosRepository");
 const producto_pedidoRepository_1 = require("../repositories/producto_pedidoRepository");
 const productos_pedidoServices_1 = require("./productos_pedidoServices");
+// import { sendWhatsappNotification } from '../utils/whatsapp';
 const dotenv_1 = __importDefault(require("dotenv"));
 const clientesRepository_1 = require("../repositories/clientesRepository");
 const clientesRepository_2 = require("../repositories/clientesRepository");
-const sendWhatsapp_1 = __importDefault(require("../utils/sendWhatsapp"));
+// import sendWhatsAppMessage from '../utils/sendWhatsapp';
 const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
 const EtapaDeVentaEnum_1 = require("../enums/EtapaDeVentaEnum");
+const pushoverNotificacion_1 = require("../utils/pushoverNotificacion");
+const usuariosRepository_1 = require("../repositories/usuariosRepository");
 dotenv_1.default.config();
 const getPedidosService = () => __awaiter(void 0, void 0, void 0, function* () {
     const pedidos = yield (0, pedidosRepository_1.getPedidos)();
@@ -81,7 +84,21 @@ const createPedidosService = (pedidoData) => __awaiter(void 0, void 0, void 0, f
     //     console.error('No se pudo enviar WhatsApp al admin:', error);
     //   }
     // }
-    yield (0, sendWhatsapp_1.default)('pedido');
+    // await sendWhatsAppMessage('pedido')
+    // variables para la Notification
+    const pushoverToken = process.env.PUSHOVER_TOKEN;
+    const pushoverUser = process.env.PUSHOVER_USER;
+    const vendedor = yield (0, usuariosRepository_1.getUsuarioByIdDb)(pedido.vendedor_id);
+    if (vendedor && pushoverToken && pushoverUser) {
+        yield (0, pushoverNotificacion_1.sendPushNotification)({
+            token: pushoverToken,
+            title: 'Nuevo pedido',
+            message: `Nuevo pedido creado por ${vendedor.nombre}, Cliente: ${cliente === null || cliente === void 0 ? void 0 : cliente.empresa}, Total del Pedido: ${pedido.total} fecha: ${new Date().toLocaleString()}`,
+            user: pushoverUser,
+            url: 'https://crmsumichen.com',
+            device: 'chrome'
+        });
+    }
     return pedido;
 });
 exports.createPedidosService = createPedidosService;

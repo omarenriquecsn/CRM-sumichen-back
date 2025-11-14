@@ -13,13 +13,15 @@ import {
   deleteProductos_pedidoService,
 } from './productos_pedidoServices';
 
-import { sendWhatsappNotification } from '../utils/whatsapp';
+// import { sendWhatsappNotification } from '../utils/whatsapp';
 import dotenv from 'dotenv';
 import { getClientesByIdAuxiliar } from '../repositories/clientesRepository';
 import { updateCliente } from '../repositories/clientesRepository';
-import sendWhatsAppMessage from '../utils/sendWhatsapp';
+// import sendWhatsAppMessage from '../utils/sendWhatsapp';
 import { EstadoClienteEnum } from '../enums/EstadoClienteEnum';
 import { EtapaDeVentaEnum } from '../enums/EtapaDeVentaEnum';
+import { sendPushNotification } from '../utils/pushoverNotificacion';
+import { getUsuarioByIdDb } from '../repositories/usuariosRepository';
 dotenv.config();
 
 export const getPedidosService = async () => {
@@ -73,18 +75,16 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
     }),
   );
 
-
-
   // Notificación WhatsApp al admin
   const adminNumber = process.env.ADMIN_WHATSAPP_NUMBER;
 
   const cliente = await getClientesByIdAuxiliar(pedido.cliente_id);
-  if(cliente && cliente.estado !== 'activo'){
+  if (cliente && cliente.estado !== 'activo') {
     cliente.estado = EstadoClienteEnum.ACTIVO;
     cliente.etapa_venta = EtapaDeVentaEnum.CERRADO;
     await updateCliente(cliente.id, cliente);
   }
-    
+
   // const mensaje = `Nuevo pedido creado: Nro ${pedido.numero}, Cliente: ${cliente?.empresa}, Total: ${pedido.total}`;
   // if (adminNumber) {
   //   try {
@@ -94,7 +94,22 @@ export const createPedidosService = async (pedidoData: CrearPedidoDto) => {
   //   }
   // }
 
-  await sendWhatsAppMessage('pedido')
+  // await sendWhatsAppMessage('pedido')
+  // variables para la Notification
+  const pushoverToken = process.env.PUSHOVER_TOKEN;
+  const pushoverUser = process.env.PUSHOVER_USER;
+  const vendedor = await getUsuarioByIdDb(pedido.vendedor_id);
+
+  if (vendedor && pushoverToken && pushoverUser) {
+   await sendPushNotification({
+      token: pushoverToken,
+      title: 'Nuevo pedido',
+      message: `Nuevo pedido creado por ${vendedor.nombre}, Cliente: ${cliente?.empresa}, Total del Pedido: ${pedido.total} fecha: ${new Date().toLocaleString()}`,
+      user:pushoverUser,
+      url: 'https://crmsumichen.com',
+      device: 'chrome'
+    });
+  }
 
   return pedido;
 };
