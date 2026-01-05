@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -23,34 +25,63 @@ export const subirEvidencia = [
     const pdfFinal = await unirPDFS(buffersPDF);
     const fileName = `pedido_${id}_${Date.now()}.pdf`;
 
-    const { data, error } = await supabase.storage
-      .from('evidencias')
-      .upload(fileName, pdfFinal, {
-        contentType: 'application/pdf',
-        upsert: true,
-      });
-    if (error) {
-      return res.status(500).json({
-        error: 'Error al subir archivo a Supabase',
-        details: error.message,
-      });
+//     const { data, error } = await supabase.storage
+//       .from('evidencias')
+//       .upload(fileName, pdfFinal, {
+//         contentType: 'application/pdf',
+//         upsert: true,
+//       });
+//     if (error) {
+//       return res.status(500).json({
+//         error: 'Error al subir archivo a Supabase',
+//         details: error.message,
+//       });
+//     }
+//     // Construir URL pública
+//     const { publicUrl } = supabase.storage
+//       .from('evidencias')
+//       .getPublicUrl(fileName).data;
+//     // Actualizar pedido con la URL
+//     const actualizado = await updatePedidosService(id, {
+//       evidencia_url: publicUrl,
+//     });
+//     if (!actualizado) {
+//       return res
+//         .status(500)
+//         .json({ error: 'No se pudo actualizar el pedido con la evidencia' });
+//     }
+//     res.json({ url: publicUrl });
+//   },
+// ];
+
+// Ruta absoluta en tu VPS
+    const uploadDir = path.join('/var/www/crm-backend/uploads/evidencias');
+    const filePath = path.join(uploadDir, fileName);
+
+    // Asegurar que la carpeta exista
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
     }
-    // Construir URL pública
-    const { publicUrl } = supabase.storage
-      .from('evidencias')
-      .getPublicUrl(fileName).data;
+
+    // Guardar el archivo en el servidor
+    fs.writeFileSync(filePath, pdfFinal);
+
+    // Construir URL pública (ejemplo: si sirves /uploads como estático en Express)
+    const publicUrl = `https://crmsumichen.com/uploads/evidencias/${fileName}.pdf`;
+
     // Actualizar pedido con la URL
     const actualizado = await updatePedidosService(id, {
       evidencia_url: publicUrl,
     });
+
     if (!actualizado) {
-      return res
-        .status(500)
-        .json({ error: 'No se pudo actualizar el pedido con la evidencia' });
+      return res.status(500).json({ error: 'No se pudo actualizar el pedido con la evidencia' });
     }
+
     res.json({ url: publicUrl });
   },
 ];
+
 
 import { Request, Response } from 'express';
 import {

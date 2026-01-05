@@ -11,6 +11,7 @@ import ticketsRoutes from './ticketsRoutes';
 import usuariosRoutes from './usuariosRoutes';
 import descargasRoutes from './descargasRoutes';
 import notificaciones from './notificacionesRoutes';
+import archivosRoutes from './archivosRoutes';
 
 // import turnRoutes from "./turnRoutes"
 const router: Router = Router();
@@ -27,5 +28,6 @@ router.use('/', ticketsRoutes);
 router.use('/', usuariosRoutes);
 router.use('/', descargasRoutes);
 router.use('/', notificaciones);
+router.use('/', archivosRoutes);
 
 export default router;
