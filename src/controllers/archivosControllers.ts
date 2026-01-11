@@ -3,7 +3,8 @@ import path from 'path';
 
 export const getArchivos = async (req: Request, res: Response) => {
       const fileName = req.params.fileName;
-      const filePath = path.join(__dirname, '../uploads/evidencias', fileName);
+      const filePath = path.join(__dirname, '../../uploads/evidencias', fileName);
+      console.log(filePath);
     
       res.setHeader('Content-Type', 'application/pdf');
       res.sendFile(filePath, (err) => {

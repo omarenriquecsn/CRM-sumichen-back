@@ -16,6 +16,7 @@ const ticketsRoutes_1 = __importDefault(require("./ticketsRoutes"));
 const usuariosRoutes_1 = __importDefault(require("./usuariosRoutes"));
 const descargasRoutes_1 = __importDefault(require("./descargasRoutes"));
 const notificacionesRoutes_1 = __importDefault(require("./notificacionesRoutes"));
+const archivosRoutes_1 = __importDefault(require("./archivosRoutes"));
 // import turnRoutes from "./turnRoutes"
 const router = (0, express_1.Router)();
 router.use('/', actividadesRoutes_1.default);
@@ -30,4 +31,5 @@ router.use('/', ticketsRoutes_1.default);
 router.use('/', usuariosRoutes_1.default);
 router.use('/', descargasRoutes_1.default);
 router.use('/', notificacionesRoutes_1.default);
+router.use('/', archivosRoutes_1.default);
 exports.default = router;

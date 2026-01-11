@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePedido = exports.updatePedido = exports.createPedido = exports.getPedidosByVendedor = exports.getPedidoById = exports.getPedidos = exports.subirEvidencia = void 0;
 const supabase_js_1 = require("@supabase/supabase-js");
 const multer_1 = __importDefault(require("multer"));
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const upload = (0, multer_1.default)();
 exports.subirEvidencia = [
@@ -30,22 +32,51 @@ exports.subirEvidencia = [
         const buffersPDF = yield Promise.all(req.files.map(ConvertirArchivo_1.default));
         const pdfFinal = yield (0, UnirArchivos_1.default)(buffersPDF);
         const fileName = `pedido_${id}_${Date.now()}.pdf`;
-        const { data, error } = yield supabase.storage
-            .from('evidencias')
-            .upload(fileName, pdfFinal, {
-            contentType: 'application/pdf',
-            upsert: true,
-        });
-        if (error) {
-            return res.status(500).json({
-                error: 'Error al subir archivo a Supabase',
-                details: error.message,
-            });
+        //     const { data, error } = await supabase.storage
+        //       .from('evidencias')
+        //       .upload(fileName, pdfFinal, {
+        //         contentType: 'application/pdf',
+        //         upsert: true,
+        //       });
+        //     if (error) {
+        //       return res.status(500).json({
+        //         error: 'Error al subir archivo a Supabase',
+        //         details: error.message,
+        //       });
+        //     }
+        //     // Construir URL pública
+        //     const { publicUrl } = supabase.storage
+        //       .from('evidencias')
+        //       .getPublicUrl(fileName).data;
+        //     // Actualizar pedido con la URL
+        //     const actualizado = await updatePedidosService(id, {
+        //       evidencia_url: publicUrl,
+        //     });
+        //     if (!actualizado) {
+        //       return res
+        //         .status(500)
+        //         .json({ error: 'No se pudo actualizar el pedido con la evidencia' });
+        //     }
+        //     res.json({ url: publicUrl });
+        //   },
+        // ];
+        // Ruta absoluta en tu VPS
+        const uploadDir = path_1.default.resolve('/var/www/crm-backend/uploads/evidencias');
+        const filePath = path_1.default.join(uploadDir, fileName);
+        // Asegurar que la carpeta exista
+        if (!fs_1.default.existsSync(uploadDir)) {
+            fs_1.default.mkdirSync(uploadDir, { recursive: true });
         }
-        // Construir URL pública
-        const { publicUrl } = supabase.storage
-            .from('evidencias')
-            .getPublicUrl(fileName).data;
+        // Guardar el archivo en el servidor
+        try {
+            fs_1.default.writeFileSync(filePath, pdfFinal);
+            console.log('Archivo guardado en:', filePath);
+        }
+        catch (err) {
+            console.error('Error al guardar archivo:', err);
+        }
+        // Construir URL pública (ejemplo: si sirves /uploads como estático en Express)
+        const publicUrl = `https://crmsumichen.com/api/uploads/${fileName}`;
         // Actualizar pedido con la URL
         const actualizado = yield (0, pedidosServices_1.updatePedidosService)(id, {
             evidencia_url: publicUrl,

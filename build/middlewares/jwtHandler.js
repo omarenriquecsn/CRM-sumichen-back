@@ -11,10 +11,10 @@ const verificarToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
     const token = authHeader === null || authHeader === void 0 ? void 0 : authHeader.split(' ')[1];
     if (!token)
-        return res.status(401).json({ error: 'No hay token' });
+        return res.status(401).json({ error: 'Acceso denegado' });
     const secret = process.env.SUPABASE_JWT_SECRET;
     if (!secret)
-        return res.status(500).json({ error: 'No hay clave secret' });
+        return res.status(500).json({ error: 'Error de clave secreta' });
     try {
         const decoded = jsonwebtoken_1.default.verify(token, secret);
         req.user = decoded;
@@ -22,7 +22,7 @@ const verificarToken = (req, res, next) => {
     }
     catch (err) {
         console.error(err);
-        return res.status(403).json({ error: 'Token inválido' });
+        return res.status(403).json({ error: 'Acceso denegado' });
     }
 };
 exports.default = verificarToken;
