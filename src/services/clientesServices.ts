@@ -49,6 +49,7 @@ export const updateClientesService = async (
   if(cliente && clienteData.estado  && cliente.estado !== clienteData.estado )   {
     clienteData.fecha_estado = new Date();
     clienteData.estado_anterior = cliente?.estado;
+    clienteData.fecha_actualizacion = new Date();
   }
   const clienteActualizado = await updateCliente(id, clienteData);
   return {
