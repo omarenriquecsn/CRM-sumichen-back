@@ -43,6 +43,7 @@ const updateClientesService = (id, clienteData) => __awaiter(void 0, void 0, voi
     if (cliente && clienteData.estado && cliente.estado !== clienteData.estado) {
         clienteData.fecha_estado = new Date();
         clienteData.estado_anterior = cliente === null || cliente === void 0 ? void 0 : cliente.estado;
+        clienteData.fecha_actualizacion = new Date();
     }
     const clienteActualizado = yield (0, clientesRepository_1.updateCliente)(id, clienteData);
     return {
