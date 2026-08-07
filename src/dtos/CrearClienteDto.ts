@@ -1,5 +1,6 @@
-import { IsEmail, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MaxLength, IsEnum } from 'class-validator';
 import { Unique } from 'typeorm';
+import { CustomerSector } from '../types/customer.types';
 
 export class CreateClienteDto {
   @IsString()
@@ -26,4 +27,8 @@ export class CreateClienteDto {
   @IsOptional()
   @IsString()
   direccion?: string;
+
+  @IsOptional()
+  @IsEnum(CustomerSector, { message: 'El sector proporcionado no es válido' })
+  sector?: CustomerSector;
 }

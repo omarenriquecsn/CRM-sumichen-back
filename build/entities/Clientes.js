@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const Vendedores_1 = require("./Vendedores");
 const EtapaDeVentaEnum_1 = require("../enums/EtapaDeVentaEnum");
 const EstadoClienteEnum_1 = require("../enums/EstadoClienteEnum");
+const customer_types_1 = require("../types/customer.types");
 let Cliente = class Cliente {
 };
 exports.Cliente = Cliente;
@@ -106,6 +107,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'date', nullable: true, default: new Date() }),
     __metadata("design:type", Date)
 ], Cliente.prototype, "fecha_actualizacion", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: customer_types_1.CustomerSector,
+        nullable: true, // ¡Clave para no romper registros anteriores!
+    }),
+    __metadata("design:type", String)
+], Cliente.prototype, "sector", void 0);
 exports.Cliente = Cliente = __decorate([
     (0, typeorm_1.Entity)('clientes')
 ], Cliente);

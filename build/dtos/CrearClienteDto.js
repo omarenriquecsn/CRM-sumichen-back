@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateClienteDto = void 0;
 const class_validator_1 = require("class-validator");
+const customer_types_1 = require("../types/customer.types");
 class CreateClienteDto {
 }
 exports.CreateClienteDto = CreateClienteDto;
@@ -46,3 +47,8 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateClienteDto.prototype, "direccion", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(customer_types_1.CustomerSector, { message: 'El sector proporcionado no es válido' }),
+    __metadata("design:type", String)
+], CreateClienteDto.prototype, "sector", void 0);

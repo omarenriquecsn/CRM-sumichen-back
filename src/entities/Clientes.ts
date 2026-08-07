@@ -8,6 +8,8 @@ import {
 import { Vendedor } from './Vendedores';
 import { EtapaDeVentaEnum } from '../enums/EtapaDeVentaEnum';
 import { EstadoClienteEnum } from '../enums/EstadoClienteEnum';
+import { CustomerSector } from '../types/customer.types';
+
 @Entity('clientes')
 export class Cliente {
   @PrimaryGeneratedColumn('uuid')
@@ -52,11 +54,11 @@ export class Cliente {
   })
   etapa_venta: EtapaDeVentaEnum;
 
-    // En tu entidad Cliente
+  // En tu entidad Cliente
   @Column({ type: 'text', nullable: true })
   estado_anterior?: string;
 
-    @Column({ type: 'timestamptz', nullable: true })
+  @Column({ type: 'timestamptz', nullable: true })
   fecha_estado?: Date;
 
   @Column({ type: 'text', nullable: true })
@@ -68,10 +70,10 @@ export class Cliente {
   @Column({ nullable: true, default: 'valencia' })
   ciudad: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   direccion_entrega?: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   google_maps?: string;
 
   @Column({ type: 'date', nullable: true, default: new Date() })
@@ -79,4 +81,11 @@ export class Cliente {
 
   @Column({ type: 'date', nullable: true, default: new Date() })
   fecha_actualizacion?: Date;
+
+  @Column({
+    type: 'enum',
+    enum: CustomerSector,
+    nullable: true, // ¡Clave para no romper registros anteriores!
+  })
+  sector?: CustomerSector;
 }
